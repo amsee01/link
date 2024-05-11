@@ -65,13 +65,13 @@ const Sidebar = () => {
           </button>
         </div>
         <hr className="mt-[20px]" />
-        <div className="mt-[20px]">
+        {/* <div className="mt-[20px]">
           <ul className="sidebarList">
             {Friends.map((friend) => (
               <FriendsList key={friend.id} friend={friend} />
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
