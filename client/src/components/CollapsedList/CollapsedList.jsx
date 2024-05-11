@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import UploadPost from "../UploadPost/UploadPost";
-import Post from "../Post/Post";
+import Post from "../CollapsedPost/CollapsedPost";
 import { Posts } from "../../data/dummyData";
 import axios from "axios";
 import { getAllPosts, getTimeLinePost } from "../../utils/api/api";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import NewsFeed from "../NewsFeed/NewsFeed";
 
-
-const NewsFeed = ({ userPosts }) => {
+const CollapsedNewsFeed = ({ userPosts }) => {
   const [posts, setPosts] = useState([]);
   const { username } = useParams();
   const { user } = useContext(AuthContext);
@@ -28,10 +28,10 @@ const NewsFeed = ({ userPosts }) => {
   }, [username]);
 
   return (
-    <div style={{ flex: 5.5 }} className="p-[10px]">
-      {/* {(!username || username === user?.username) && (
+    <div style={{ flex: 2.5 }} className="p-[10px]">
+      {(!username || username === user?.username) && (
           <UploadPost />
-      )} */}
+      )}
       {posts.map((post) => (
         <Post key={post._id} post={post} />
       ))}
@@ -39,4 +39,4 @@ const NewsFeed = ({ userPosts }) => {
   );
 };
 
-export default NewsFeed;
+export default CollapsedNewsFeed;
