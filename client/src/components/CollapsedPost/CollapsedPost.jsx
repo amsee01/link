@@ -62,13 +62,10 @@ const Post = ({ post }) => {
             className="w-[24px] h-[24px] cursor-pointer"
             onClick={handleLike}
           />
-          <img
-            src={heartIcon}
-            alt="heartIcon"
-            className="w-[24px] h-[24px] cursor-pointer"
-            onClick={handleLike}
-          />
           <span className="text-sm">{like} likes</span>
+          <span className="text-sm ml-[10px] mr-[10px]">
+                ({user.username})
+              </span>
         </div>
       </div>
     </div>

@@ -34,16 +34,16 @@ const Register = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-green-100 flex items-center justify-center">
+    <div className="w-screen h-screen bg-blue-100 flex items-center justify-center">
       <div className="w-[70%] h-[70%] flex">
         <div className="flex flex-col justify-center" style={{ flex: 1 }}>
           <h1 className="font-extrabold text-3xl text-green-600">
-            Solu Social
+            Link 🔗
           </h1>
           <span className="text-lg font-semibold">
-            Connect With Friends On Solu Social.
+            Find peer-mentors on campus.
           </span>
-        </div>
+      </div>
         <div className="flex flex-col justify-center" style={{ flex: 1 }}>
           <form
             onSubmit={handleRegister}
@@ -51,7 +51,7 @@ const Register = () => {
           >
             <input
               type="name"
-              placeholder="username"
+              placeholder="Username"
               className="h-[50px] rounded-md border border-gray-200 text-lg p-[20px] focus:outline-none"
               onChange={(e) => {
                 setAuth({
@@ -63,7 +63,7 @@ const Register = () => {
             />
             <input
               type="email"
-              placeholder="email"
+              placeholder="Email"
               className="h-[50px] rounded-md border border-gray-200 text-lg p-[20px] focus:outline-none"
               onChange={(e) => {
                 setAuth({
@@ -74,7 +74,7 @@ const Register = () => {
               required
             />
             <input
-              type="password"
+              type="Password"
               placeholder="password"
               className="h-[50px] rounded-md border border-gray-200 text-lg p-[20px] focus:outline-none"
               onChange={(e) => {
@@ -87,7 +87,7 @@ const Register = () => {
             />
             <input
               type="password"
-              placeholder="confirm password"
+              placeholder="Confirm Password"
               className="h-[50px] rounded-md border border-gray-200 text-lg p-[20px] focus:outline-none"
               onChange={(e) => {
                 setAuth({
@@ -103,8 +103,9 @@ const Register = () => {
             >
               Sign Up
             </button>
-            <button className="h-[50px] w-1/2 rounded-lg bg-blue-600 hover:bg-blue-700 transition text-white text-lg font-bold self-center">
-              <Link to={"/login"}>Login Into Your Account</Link>
+            
+            <button className="h-[50px] rounded-lg bg-blue-600 hover:bg-purple-700 transition text-white text-lg font-bold" style={{"marginTop": "5px"}}>
+              <Link to={"/login"}>Login Instead</Link>
             </button>
           </form>
         </div>

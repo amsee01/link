@@ -32,12 +32,12 @@ const Navbar = () => {
       </div>
       <div
         className="right flex items-center justify-around text-white"
-        style={{ flex: 4 }}
+        style={{ flex:3 }}
       >
-        <div className="tabLinks text-lg cursor-pointer flex gap-[10px] ">
+        {/* <div className="tabLinks text-lg cursor-pointer flex gap-[10px] ">
           <span className="tabLink1 font-bold">Home</span>
           <span className="tablink2 font-bold">Timeline</span>
-        </div>
+        </div> */}
         <div className="tabIcons flex text-xl gap-[10px]">
           <div className="tabIcon1 cursor-pointer relative">
             <IoPersonSharp className="text-2xl" />

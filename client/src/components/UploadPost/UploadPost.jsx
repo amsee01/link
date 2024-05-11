@@ -60,7 +60,7 @@ const UploadPost = () => {
           />
           <input
             type="text"
-            placeholder="What is on your mind?"
+            placeholder="What's your Link request?"
             className="w-[80%] focus:outline-none"
             onChange={(e) => {
               setDesc(e.target.value);
@@ -82,7 +82,7 @@ const UploadPost = () => {
               className="flex items-center mr-[15px] cursor-pointer"
             >
               <MdPermMedia className="mr-[3px] text-orange-600" />
-              <span>Photo or Video</span>
+              <span>Upload an Image</span>
               <input
                 type="file"
                 name="file"
@@ -92,7 +92,7 @@ const UploadPost = () => {
                 accept=".png, .jpg, .jpeg"
               />
             </label>
-            <div className="flex items-center mr-[15px] cursor-pointer">
+            {/* <div className="flex items-center mr-[15px] cursor-pointer">
               <MdLabel className="mr-[3px] text-blue-600" />
               <span>Tags</span>
             </div>
@@ -103,14 +103,14 @@ const UploadPost = () => {
             <div className="flex items-center mr-[15px] cursor-pointer">
               <MdLocationPin className="mr-[3px] text-green-600" />
               <span>Location</span>
-            </div>
+            </div> */}
           </div>
           <button
             disabled={loading}
             onClick={handlePostUpload}
             className="bg-green-600 text-white p-[7px] rounded-lg font-bold"
           >
-            {loading ? "Uploading" : "Upload"}
+            {loading ? "Submitting" : "Submit Request 🔗"}
           </button>
         </div>
       </div>

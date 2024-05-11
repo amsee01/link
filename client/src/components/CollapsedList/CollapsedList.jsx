@@ -28,7 +28,7 @@ const CollapsedNewsFeed = ({ userPosts }) => {
   }, [username]);
 
   return (
-    <div style={{ flex: 2.5 }} className="p-[10px]">
+    <div style={{ flex: 4 }} className="p-[10px]">
       {(!username || username === user?.username) && (
           <UploadPost />
       )}
