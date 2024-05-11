@@ -1,7 +1,8 @@
 import React from "react";
 import { SiFeedly } from "react-icons/si";
 import { BiSolidVideos } from "react-icons/bi";
-import { MdGroups } from "react-icons/md";
+import { MdGroups, MdBook, MdEmojiPeople, MdScience } from "react-icons/md";
+
 import {
   IoChatboxEllipsesSharp,
   IoBookmarks,
@@ -22,40 +23,24 @@ const Sidebar = () => {
       <div className=" p-[20px] ">
         <ul className="sidebarList m-0 p-0">
           <li>
-            <SiFeedly />
-            <span>Feeds</span>
+            <MdBook />
+            <span>Classes</span>
           </li>
           <li>
-            <BiSolidVideos />
-            <span>Videos</span>
+            <MdEmojiPeople />
+            <span>Clubs</span>
+          </li>
+          <li>
+            <MdScience />
+            <span>Research</span>
           </li>
           <li>
             <MdGroups />
-            <span>Groups</span>
-          </li>
-          <li>
-            <IoChatboxEllipsesSharp />
-            <span>Chat</span>
-          </li>
-          <li>
-            <IoBookmarks />
-            <span>Bookmarks</span>
-          </li>
-          <li>
-            <BsFillQuestionSquareFill />
-            <span>Questions</span>
+            <span>Hobbies</span>
           </li>
           <li>
             <IoBriefcase />
-            <span>Jobs</span>
-          </li>
-          <li>
-            <FaUserGraduate />
-            <span>Courses</span>
-          </li>
-          <li>
-            <FaCalendarDay />
-            <span>Events</span>
+            <span>Work</span>
           </li>
         </ul>
         <div className="button">

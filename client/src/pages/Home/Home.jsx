@@ -12,7 +12,7 @@ const Home = () => {
       <div className="flex">
         <Sidebar />
         <NewsFeed />
-        <Rightbar />
+        {/* <Rightbar /> */}
       </div>
     </>
   );
