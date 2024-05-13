@@ -97,7 +97,7 @@ const Profile = () => {
             </div>
             <div className="flex flex-col items-center">
               <h1 className="font-bold text-2xl">{user.username}</h1>
-              <span>{user.desc || "I am new here!"}</span>
+              <span>{user.desc || "Looking to make connections!"}</span>
               {username === currentUser?.username && (
                 <>
                   {editMode ? (

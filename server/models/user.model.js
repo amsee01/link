@@ -33,11 +33,11 @@ const userSchema = new Schema({
   },
   from: {
     type: String,
-    default: "Ghana",
+    default: "Undeclared",
   },
   city: {
     type: String,
-    default: "Accra",
+    default: "Stanford, CA",
   },
   relationship: {
     type: Number,

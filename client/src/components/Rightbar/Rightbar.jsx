@@ -86,21 +86,21 @@ const Rightbar = ({ user }) => {
             {isFollowed ? "Following" : "Follow"}
           </button>
         )}
-        <h1 className="font-bold text-xl mb-[10px]">User Information</h1>
+        <h1 className="font-bold text-xl mb-[10px]">About Me</h1>
         <div className="mb-[30px]">
           <div className="mb-[10px]">
             <span className="font-semibold mr-[15px] text-slate-500">
-              City:
+              From:
             </span>
             <span>{user.city}</span>
           </div>
           <div className="mb-[10px]">
             <span className="font-semibold mr-[15px] text-slate-500">
-              From:
+              Studying:
             </span>
             <span>{user.from}</span>
           </div>
-          <div className="mb-[10px]">
+          {/* <div className="mb-[10px]">
             <span className="font-semibold mr-[15px] text-slate-500">
               Relationship:
             </span>
@@ -111,8 +111,8 @@ const Rightbar = ({ user }) => {
                 ? "Married"
                 : "It's Complicated"}
             </span>
-          </div>
-          <h1 className="font-bold text-xl mb-[10px]">Friends</h1>
+          </div> */}
+          {/* <h1 className="font-bold text-xl mb-[10px]">Friends</h1>
           <div className="grid grid-cols-3 gap-4">
             {friends.map((friend) => (
               <Link to={`/profile/${friend?.username}`}>
@@ -128,7 +128,7 @@ const Rightbar = ({ user }) => {
                 </div>
               </Link>
             ))}
-          </div>
+          </div> */}
         </div>
       </>
     );

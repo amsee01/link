@@ -74,8 +74,8 @@ const Register = () => {
               required
             />
             <input
-              type="Password"
-              placeholder="password"
+              type="password"
+              placeholder="Password"
               className="h-[50px] rounded-md border border-gray-200 text-lg p-[20px] focus:outline-none"
               onChange={(e) => {
                 setAuth({
