@@ -33,17 +33,20 @@ const Register = () => {
     }
   };
 
+  const handleLoginInstead = (e) => {
+    e.preventDefault();
+    navigate("/login");
+  };
+
   return (
     <div className="w-screen h-screen bg-blue-100 flex items-center justify-center">
       <div className="w-[70%] h-[70%] flex">
         <div className="flex flex-col justify-center" style={{ flex: 1 }}>
-          <h1 className="font-extrabold text-3xl text-green-600">
-            Link 🔗
-          </h1>
+          <h1 className="font-extrabold text-3xl text-green-600">Link 🔗</h1>
           <span className="text-lg font-semibold">
             Find peer-mentors on campus.
           </span>
-      </div>
+        </div>
         <div className="flex flex-col justify-center" style={{ flex: 1 }}>
           <form
             onSubmit={handleRegister}
@@ -103,9 +106,14 @@ const Register = () => {
             >
               Sign Up
             </button>
-            
-            <button className="h-[50px] rounded-lg bg-blue-600 hover:bg-purple-700 transition text-white text-lg font-bold" style={{"marginTop": "5px"}}>
-              <Link to={"/login"}>Login Instead</Link>
+
+            <button
+              className="h-[50px] rounded-lg bg-blue-600 hover:bg-purple-700 transition text-white text-lg font-bold"
+              style={{ marginTop: "5px" }}
+              onClick={handleLoginInstead}
+            >
+              Login Instead
+              {/* <Link to={"/login"}>Login Instead</Link> */}
             </button>
           </form>
         </div>
