@@ -18,7 +18,7 @@ const PostView = ({ post }) => {
     <div className="post-view bg-white rounded-lg shadow-lg p-4">
       <div className="post-header flex items-center mb-4">
         <img
-          src={post.profilePicture || user.profilePicture}
+          src={user.profilePicture}
           alt="profile"
           className="w-[50px] h-[50px] rounded-full object-cover mr-4"
         />
@@ -30,7 +30,7 @@ const PostView = ({ post }) => {
         </div>
       </div>
       <div className="post-content mb-4">
-        <p className="mb-4">{post.content}</p>
+        <p className="mb-4">{post.desc}</p>
         {post.img && (
           <img src={post.img} alt="post" className="w-full object-cover mb-4" />
         )}
@@ -40,12 +40,6 @@ const PostView = ({ post }) => {
           <img
             src={likeIcon}
             alt="like"
-            className="w-[24px] h-[24px] cursor-pointer mr-2"
-            onClick={handleLike}
-          />
-          <img
-            src={heartIcon}
-            alt="heart"
             className="w-[24px] h-[24px] cursor-pointer mr-2"
             onClick={handleLike}
           />

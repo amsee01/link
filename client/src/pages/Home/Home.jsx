@@ -38,7 +38,7 @@ const Home = () => {
       <Navbar />
       <div className="flex">
         <Sidebar onFilterChange={handleFilterChange} />
-        <div style={{ flex: 3, padding: "10px" }}>
+        <div className="flex-grow p-4">
           <UploadPost />
           <CollapsedList
             posts={filteredPosts}

@@ -92,7 +92,7 @@ const UploadPost = () => {
           <button
             disabled={loading}
             onClick={handlePostUpload}
-            className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold whitespace-nowrap"
           >
             {loading ? "Submitting" : "Submit Request 🔗"}
           </button>
