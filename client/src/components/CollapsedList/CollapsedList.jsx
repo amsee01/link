@@ -20,8 +20,9 @@ const CollapsedList = ({ posts, onSelectPost, selectedPost }) => {
               </p>
               <p className="text-xs text-gray-500">{post.username}</p>
             </div>
-            <div className="text-xs text-gray-500">
-              {post.likes.length} likes
+            <div className="text-xs text-gray-500 flex flex-col items-end">
+              <p>{post.likes.length} likes</p>
+              <p>{post.comments.length} comments</p>
             </div>
           </div>
         ))
