@@ -43,6 +43,7 @@ const Home = () => {
           <CollapsedList
             posts={filteredPosts}
             onSelectPost={handleSelectPost}
+            selectedPost={selectedPost}
           />
         </div>
         <div
