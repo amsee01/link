@@ -42,9 +42,9 @@ const UploadPost = () => {
   };
 
   return (
-    <div className="w-full h-[170px] rounded-lg shadow-lg ">
-      <div className="wrapper p-[10px]">
-        <div className="top flex items-center">
+    <div className="w-full h-[170px] rounded-lg shadow-lg p-[20px] bg-white">
+      <div className="wrapper flex flex-col">
+        <div className="top flex items-center mb-4">
           <img
             src={user.profilePicture ? user.profilePicture : userPic}
             alt="profilepic"
@@ -53,7 +53,7 @@ const UploadPost = () => {
           <input
             type="text"
             placeholder="What's your Link request?"
-            className="w-[80%] focus:outline-none"
+            className="flex-grow focus:outline-none border border-gray-300 rounded-lg p-2"
             onChange={(e) => setDesc(e.target.value)}
           />
           {preview && (
@@ -64,14 +64,11 @@ const UploadPost = () => {
             />
           )}
         </div>
-        <hr className="m-[20px]" />
+        <hr className="mb-4" />
         <div className="bottom flex items-center justify-between">
-          <div className="flex ml-[20px]">
-            <label
-              htmlFor="file"
-              className="flex items-center mr-[15px] cursor-pointer"
-            >
-              <span>Upload an Image</span>
+          <div className="flex items-center">
+            <label htmlFor="file" className="flex items-center cursor-pointer">
+              <span className="mr-2">Upload an Image</span>
               <input
                 type="file"
                 name="file"
@@ -81,7 +78,10 @@ const UploadPost = () => {
                 accept=".png, .jpg, .jpeg"
               />
             </label>
-            <select onChange={(e) => setType(e.target.value)}>
+            <select
+              onChange={(e) => setType(e.target.value)}
+              className="ml-4 border border-gray-300 rounded-lg p-2"
+            >
               {POST_TYPES.map((type) => (
                 <option key={type} value={type}>
                   {type}
@@ -92,7 +92,7 @@ const UploadPost = () => {
           <button
             disabled={loading}
             onClick={handlePostUpload}
-            className="bg-green-600 text-white p-[7px] rounded-lg font-bold"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold"
           >
             {loading ? "Submitting" : "Submit Request 🔗"}
           </button>

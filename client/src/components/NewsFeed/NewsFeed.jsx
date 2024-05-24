@@ -7,7 +7,6 @@ import { getAllPosts, getTimeLinePost } from "../../utils/api/api";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
-
 const NewsFeed = ({ userPosts }) => {
   const [posts, setPosts] = useState([]);
   const { username } = useParams();
@@ -19,7 +18,6 @@ const NewsFeed = ({ userPosts }) => {
           ? await getTimeLinePost(username)
           : await getAllPosts();
         setPosts(res.data.posts);
-        
       } catch (error) {
         console.log(error);
       }
@@ -29,9 +27,7 @@ const NewsFeed = ({ userPosts }) => {
 
   return (
     <div style={{ flex: 5.5 }} className="p-[10px]">
-      {/* {(!username || username === user?.username) && (
-          <UploadPost />
-      )} */}
+      {/* {(!username || username === user?.username) && <UploadPost />} */}
       {posts.map((post) => (
         <Post key={post._id} post={post} />
       ))}

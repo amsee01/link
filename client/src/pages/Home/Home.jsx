@@ -38,14 +38,22 @@ const Home = () => {
       <Navbar />
       <div className="flex">
         <Sidebar onFilterChange={handleFilterChange} />
-        <div style={{ flex: 4 }} className="p-[10px]">
+        <div style={{ flex: 3, padding: "10px" }}>
           <UploadPost />
           <CollapsedList
             posts={filteredPosts}
             onSelectPost={handleSelectPost}
           />
         </div>
-        <PostView post={selectedPost} />
+        <div
+          style={{
+            flex: selectedPost ? 6 : 0,
+            padding: "10px",
+            transition: "flex 0.3s ease",
+          }}
+        >
+          <PostView post={selectedPost} />
+        </div>
       </div>
     </>
   );
