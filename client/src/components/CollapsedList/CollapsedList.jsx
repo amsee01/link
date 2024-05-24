@@ -1,12 +1,17 @@
 import React from "react";
 
 const CollapsedList = ({ posts, onSelectPost, selectedPost }) => {
+  // Sort posts in reverse chronological order
+  const sortedPosts = [...posts].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   return (
     <div className="collapsed-list">
-      {posts.length === 0 ? (
+      {sortedPosts.length === 0 ? (
         <p className="no-posts">No posts available for this category.</p>
       ) : (
-        posts.map((post) => (
+        sortedPosts.map((post) => (
           <div
             key={post._id}
             className={`post-preview flex items-center p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer ${
