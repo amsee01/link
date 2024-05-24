@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { MdBook, MdEmojiPeople, MdScience, MdGroups } from "react-icons/md";
-import { IoBriefcase } from "react-icons/io5";
+import { MdBook, MdEmojiPeople, MdGroups, MdScience } from "react-icons/md";
+import { IoBriefcase, IoGlobe } from "react-icons/io5";
 import { POST_TYPES } from "../../constants/constants";
 
 const Sidebar = ({ onFilterChange }) => {
@@ -13,6 +13,8 @@ const Sidebar = ({ onFilterChange }) => {
     }
   };
 
+  const postTypes = ["Everything", ...POST_TYPES]; // add an everything filter
+
   return (
     <div
       style={{ flex: 3, height: "calc(100vh - 50px)" }}
@@ -20,7 +22,7 @@ const Sidebar = ({ onFilterChange }) => {
     >
       <div className="p-[20px]">
         <ul className="sidebarList m-0 p-0">
-          {POST_TYPES.map((category) => (
+          {postTypes.map((category) => (
             <li
               key={category}
               onClick={() => handleCategoryClick(category)}
@@ -32,6 +34,7 @@ const Sidebar = ({ onFilterChange }) => {
             >
               {category === "Classes" && <MdBook className="mr-[10px]" />}
               {category === "Clubs" && <MdEmojiPeople className="mr-[10px]" />}
+              {category === "Everything" && <IoGlobe className="mr-[10px]" />}
               {category === "Research" && <MdScience className="mr-[10px]" />}
               {category === "Hobbies" && <MdGroups className="mr-[10px]" />}
               {category === "Work" && <IoBriefcase className="mr-[10px]" />}

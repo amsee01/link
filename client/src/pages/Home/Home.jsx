@@ -17,7 +17,14 @@ const Home = () => {
       try {
         const res = await getAllPosts();
         setPosts(res.data.posts);
-        setFilteredPosts(res.data.posts.filter((post) => post.type === filter));
+        if (filter === "Everything") {
+          // handle Everything case
+          setFilteredPosts(res.data.posts);
+        } else {
+          setFilteredPosts(
+            res.data.posts.filter((post) => post.type === filter)
+          );
+        }
       } catch (error) {
         console.log(error);
       }
