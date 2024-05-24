@@ -8,7 +8,9 @@ const Sidebar = ({ onFilterChange }) => {
 
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
-    onFilterChange(category);
+    if (onFilterChange) {
+      onFilterChange(category);
+    }
   };
 
   return (

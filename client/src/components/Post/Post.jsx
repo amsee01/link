@@ -9,14 +9,14 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
 
 const Post = ({ post, onClose }) => {
-  const [like, setLike] = useState(post?.likes.length || 0);
+  const [like, setLike] = useState(post.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const { user: currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
-    setLike(post.likes.length);
+    setLike(post.likes?.length);
   }, [currentUser?._id, post]);
 
   useEffect(() => {
