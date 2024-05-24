@@ -9,13 +9,17 @@ import moment from "moment";
 
 const PostView = ({ post }) => {
   const { user: currentUser } = useContext(AuthContext);
-  const [like, setLike] = useState(post?.likes?.length || 0);
+  console.log(post);
+  const [like, setLike] = useState(post?.likes.length || 0);
+  console.log(post);
+  console.log(like);
   const [isLiked, setIsLiked] = useState(false);
   const [postUser, setPostUser] = useState({});
 
   useEffect(() => {
     if (post) {
-      setIsLiked(post.likes?.includes(currentUser._id));
+      setIsLiked(post.likes.includes(currentUser._id));
+      setLike(post.likes.length);
       const fetchUser = async () => {
         try {
           const res = await getUserData(post.userId);
