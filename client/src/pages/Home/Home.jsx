@@ -53,7 +53,7 @@ const Home = () => {
             transition: "flex 0.3s ease",
           }}
         >
-          <PostView post={selectedPost} />
+          <PostView post={selectedPost} setPost={setSelectedPost} />
         </div>
       </div>
     </>

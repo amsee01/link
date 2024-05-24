@@ -6,8 +6,9 @@ import { AuthContext } from "../../context/AuthContext";
 import { getUserData, likeAndDislikePost } from "../../utils/api/api";
 import { toast } from "react-toastify";
 import moment from "moment";
+import { MdClose } from "react-icons/md";
 
-const PostView = ({ post }) => {
+const PostView = ({ post, setPost }) => {
   const { user: currentUser } = useContext(AuthContext);
   const [like, setLike] = useState(post?.likes.length || 0);
   const [isLiked, setIsLiked] = useState(false);
@@ -44,8 +45,17 @@ const PostView = ({ post }) => {
     return <p className="select-post">Select a post to view</p>;
   }
 
+  const handleClose = () => {
+    setPost(null);
+  };
+
   return (
-    <div className="post-view bg-white rounded-lg shadow-lg p-4">
+    <div className="post-view bg-white rounded-lg shadow-lg p-4 relative">
+      <MdClose
+        className="absolute top-2 right-2 text-gray-500 cursor-pointer"
+        onClick={handleClose}
+        size={24}
+      />
       <div className="post-header flex items-center mb-4">
         <img
           src={postUser.profilePicture ? postUser.profilePicture : userPic}
