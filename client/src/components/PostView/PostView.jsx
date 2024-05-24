@@ -9,10 +9,7 @@ import moment from "moment";
 
 const PostView = ({ post }) => {
   const { user: currentUser } = useContext(AuthContext);
-  console.log(post);
   const [like, setLike] = useState(post?.likes.length || 0);
-  console.log(post);
-  console.log(like);
   const [isLiked, setIsLiked] = useState(false);
   const [postUser, setPostUser] = useState({});
 
