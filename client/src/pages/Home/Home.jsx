@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import CollapsedList from "../../components/CollapsedList/CollapsedList";
-import PostView from "../../components/PostView/PostView";
+import Post from "../../components/Post/Post";
 import UploadPost from "../../components/UploadPost/UploadPost";
 import { getAllPosts } from "../../utils/api/api";
 
@@ -53,7 +53,14 @@ const Home = () => {
             transition: "flex 0.3s ease",
           }}
         >
-          <PostView post={selectedPost} setPost={setSelectedPost} />
+          {selectedPost && (
+            <Post
+              post={selectedPost}
+              onClose={() => {
+                setSelectedPost(null);
+              }}
+            />
+          )}
         </div>
       </div>
     </>
