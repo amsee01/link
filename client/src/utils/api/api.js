@@ -14,11 +14,15 @@ export const getUserProfileData = (username) =>
 
 export const likeAndDislikePost = (postId, userId) =>
   API.put(`/posts/like-post/${postId}`, { userId: userId });
-export const uploadPost = async (userId, desc, img) => {
+export const uploadPost = async (userId, desc, img, type) => {
   const formData = new FormData();
   formData.append("userId", userId);
   formData.append("desc", desc);
-  formData.append("img", img);
+  formData.append("type", type);
+
+  if (img) {
+    formData.append("img", img);
+  }
 
   const res = await API.post("/posts/create-post", formData, {
     headers: {
@@ -30,5 +34,7 @@ export const uploadPost = async (userId, desc, img) => {
 };
 
 export const getUserFriends = (userId) => API.get(`/users/friends/${userId}`);
-export const unfollowUser = (userId, id) => API.put(`/users/unfollow/${id}`, {userId: userId});
-export const followUser = (userId, id) => API.put(`/users/follow/${id}`, {userId: userId});
+export const unfollowUser = (userId, id) =>
+  API.put(`/users/unfollow/${id}`, { userId: userId });
+export const followUser = (userId, id) =>
+  API.put(`/users/follow/${id}`, { userId: userId });

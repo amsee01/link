@@ -3,10 +3,14 @@ import UserModel from "../models/user.model.js";
 
 export const createPost = async (body, file) => {
   try {
-    const newPost = new PostModel({
+    const newPostData = {
       ...body,
-      img: file,
-    });
+    };
+
+    if (file) {
+      newPostData.img = file;
+    }
+    const newPost = new PostModel(newPostData);
 
     await newPost.save();
 

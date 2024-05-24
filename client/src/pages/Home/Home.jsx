@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import CollapsedList from "../../components/CollapsedList/CollapsedList";
 import PostView from "../../components/PostView/PostView";
+import UploadPost from "../../components/UploadPost/UploadPost";
 import { getAllPosts } from "../../utils/api/api";
 
 const Home = () => {
@@ -17,7 +18,6 @@ const Home = () => {
         const res = await getAllPosts();
         setPosts(res.data.posts);
         setFilteredPosts(res.data.posts.filter((post) => post.type === filter));
-        console.log(filteredPosts);
       } catch (error) {
         console.log(error);
       }
@@ -38,7 +38,13 @@ const Home = () => {
       <Navbar />
       <div className="flex">
         <Sidebar onFilterChange={handleFilterChange} />
-        <CollapsedList posts={filteredPosts} onSelectPost={handleSelectPost} />
+        <div style={{ flex: 4 }} className="p-[10px]">
+          <UploadPost />
+          <CollapsedList
+            posts={filteredPosts}
+            onSelectPost={handleSelectPost}
+          />
+        </div>
         <PostView post={selectedPost} />
       </div>
     </>
