@@ -42,7 +42,7 @@ const UploadPost = () => {
   };
 
   return (
-    <div className="w-full h-[170px] rounded-lg shadow-lg p-[20px] bg-white">
+    <div className="w-full h-[170px] rounded-lg shadow-lg p-[20px] bg-white mb-4">
       <div className="wrapper flex flex-col">
         <div className="top flex items-center mb-4">
           <img
