@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
+import NewsFeed from "../../components/NewsFeed/NewsFeed";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import CollapsedList from "../../components/CollapsedList/CollapsedList";
-import Post from "../../components/Post/Post";
 import UploadPost from "../../components/UploadPost/UploadPost";
 import { getAllPosts } from "../../utils/api/api";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPosts, setSelectedPosts] = useState([]);
   const [filter, setFilter] = useState("Classes");
 
   useEffect(() => {
@@ -29,8 +29,12 @@ const Home = () => {
     setFilter(category);
   };
 
-  const handleSelectPost = (post) => {
-    setSelectedPost(post);
+  const handleToggleSelectPost = (post) => {
+    if (selectedPosts.some((p) => p._id === post._id)) {
+      setSelectedPosts(selectedPosts.filter((p) => p._id != post._id));
+    } else {
+      setSelectedPosts([...selectedPosts, post]);
+    }
   };
 
   return (
@@ -42,24 +46,19 @@ const Home = () => {
           <UploadPost />
           <CollapsedList
             posts={filteredPosts}
-            onSelectPost={handleSelectPost}
-            selectedPost={selectedPost}
+            onSelectPost={handleToggleSelectPost}
+            selectedPosts={selectedPosts}
           />
         </div>
         <div
           style={{
-            flex: selectedPost ? 6 : 0,
+            flex: selectedPosts?.length > 0 ? 6 : 0,
             padding: "10px",
             transition: "flex 0.3s ease",
           }}
         >
-          {selectedPost && (
-            <Post
-              post={selectedPost}
-              onClose={() => {
-                setSelectedPost(null);
-              }}
-            />
+          {selectedPosts?.length > 0 && (
+            <NewsFeed posts={selectedPosts} setPosts={setSelectedPosts} />
           )}
         </div>
       </div>

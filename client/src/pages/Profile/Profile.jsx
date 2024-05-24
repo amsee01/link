@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import coverImage from "./assets/coverImage.jpg";
-import userImage from "./assets/userImage.jpg";
 import NewsFeed from "../../components/NewsFeed/NewsFeed";
 import Rightbar from "../../components/Rightbar/Rightbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -151,7 +150,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="flex">
-            <NewsFeed posts={posts} />
+            <NewsFeed posts={posts} sorted />
             <Rightbar user={user} />
           </div>
         </div>
