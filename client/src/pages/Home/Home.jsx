@@ -5,19 +5,20 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import CollapsedList from "../../components/CollapsedList/CollapsedList";
 import UploadPost from "../../components/UploadPost/UploadPost";
 import { getAllPosts } from "../../utils/api/api";
+import { ALL } from "../../constants/constants";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [selectedPosts, setSelectedPosts] = useState([]);
-  const [filter, setFilter] = useState("Classes");
+  const [filter, setFilter] = useState(ALL);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const res = await getAllPosts();
         setPosts(res.data.posts);
-        if (filter === "Everything") {
+        if (filter === ALL) {
           // handle Everything case
           setFilteredPosts(res.data.posts);
         } else {
