@@ -19,7 +19,7 @@ const Home = () => {
         const res = await getAllPosts();
         setPosts(res.data.posts);
         if (filter === ALL) {
-          // handle Everything case
+          // handle "Everything" case
           setFilteredPosts(res.data.posts);
         } else {
           setFilteredPosts(
@@ -66,7 +66,11 @@ const Home = () => {
           }}
         >
           {selectedPosts?.length > 0 && (
-            <NewsFeed posts={selectedPosts} setPosts={setSelectedPosts} />
+            <NewsFeed
+              posts={selectedPosts}
+              setPosts={setSelectedPosts}
+              reversed={true}
+            />
           )}
         </div>
       </div>
