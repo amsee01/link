@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MdClose, MdOutlineMoreVert } from "react-icons/md";
 import heartIcon from "../../assets/heart.png";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import userPic from "./assets/user.png";
 import moment from "moment";
 import { getUserData, likeAndDislikePost } from "../../utils/api/api";
@@ -80,12 +81,19 @@ const Post = ({ post, onClose }) => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-[5px]">
-          <img
-            src={heartIcon}
-            alt="heartIcon"
-            className="w-[24px] h-[24px] cursor-pointer"
-            onClick={handleLike}
-          />
+          {isLiked ? (
+            <FaHeart
+              className="w-[16px] h-[16px] cursor-pointer"
+              style={{ color: "#F53757" }}
+              onClick={handleLike}
+            />
+          ) : (
+            <FaRegHeart
+              className="w-[16px] h-[16px] cursor-pointer"
+              style={{ color: "#F53757" }}
+              onClick={handleLike}
+            />
+          )}
           <span className="text-sm">{like} likes</span>
         </div>
         <div>
