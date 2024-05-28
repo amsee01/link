@@ -1,35 +1,27 @@
 import React, { useContext, useState } from "react";
-import profilePic from "../../assets/profilepic.jpg";
-import {
-  MdLabel,
-  MdPermMedia,
-  MdEmojiEmotions,
-  MdLocationPin,
-} from "react-icons/md";
 import { uploadPost } from "../../utils/api/api";
 import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import userPic from "../Post/assets/user.png";
-
+import { POST_TYPES } from "../../constants/constants";
 
 const UploadPost = () => {
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [type, setType] = useState(POST_TYPES[0]);
   const { user } = useContext(AuthContext);
-  console.log(file);
 
   const handlePostUpload = async () => {
     setLoading(true);
     try {
-      const res = await uploadPost(user._id, desc, file);
+      const res = await uploadPost(user._id, desc, file, type);
       toast.success("Post has been Uploaded Successfully!");
       setFile(null);
       setPreview(null);
       setDesc("");
       setLoading(false);
-      console.log(res);
     } catch (error) {
       console.log(error);
       toast.error("Post Upload failed");
@@ -50,9 +42,9 @@ const UploadPost = () => {
   };
 
   return (
-    <div className="w-full h-[170px] rounded-lg shadow-lg ">
-      <div className="wrapper p-[10px]">
-        <div className="top flex items-center">
+    <div className="w-full h-[170px] rounded-lg shadow-lg p-[20px] bg-white mb-4">
+      <div className="wrapper flex flex-col">
+        <div className="top flex items-center mb-4">
           <img
             src={user.profilePicture ? user.profilePicture : userPic}
             alt="profilepic"
@@ -61,10 +53,8 @@ const UploadPost = () => {
           <input
             type="text"
             placeholder="What's your Link request?"
-            className="w-[80%] focus:outline-none"
-            onChange={(e) => {
-              setDesc(e.target.value);
-            }}
+            className="flex-grow focus:outline-none border border-gray-300 rounded-lg p-2"
+            onChange={(e) => setDesc(e.target.value)}
           />
           {preview && (
             <img
@@ -74,15 +64,11 @@ const UploadPost = () => {
             />
           )}
         </div>
-        <hr className="m-[20px]" />
+        <hr className="mb-4" />
         <div className="bottom flex items-center justify-between">
-          <div className="flex ml-[20px]">
-            <label
-              htmlFor="file"
-              className="flex items-center mr-[15px] cursor-pointer"
-            >
-              <MdPermMedia className="mr-[3px] text-orange-600" />
-              <span>Upload an Image</span>
+          <div className="flex items-center">
+            <label htmlFor="file" className="flex items-center cursor-pointer">
+              <span className="mr-2">Upload an Image</span>
               <input
                 type="file"
                 name="file"
@@ -92,23 +78,21 @@ const UploadPost = () => {
                 accept=".png, .jpg, .jpeg"
               />
             </label>
-            {/* <div className="flex items-center mr-[15px] cursor-pointer">
-              <MdLabel className="mr-[3px] text-blue-600" />
-              <span>Tags</span>
-            </div>
-            <div className="flex items-center mr-[15px] cursor-pointer">
-              <MdEmojiEmotions className="mr-[3px] text-yellow-600" />
-              <span>Emoji</span>
-            </div>
-            <div className="flex items-center mr-[15px] cursor-pointer">
-              <MdLocationPin className="mr-[3px] text-green-600" />
-              <span>Location</span>
-            </div> */}
+            <select
+              onChange={(e) => setType(e.target.value)}
+              className="ml-4 border border-gray-300 rounded-lg p-2"
+            >
+              {POST_TYPES.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
           </div>
           <button
             disabled={loading}
             onClick={handlePostUpload}
-            className="bg-green-600 text-white p-[7px] rounded-lg font-bold"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold whitespace-nowrap"
           >
             {loading ? "Submitting" : "Submit Request 🔗"}
           </button>

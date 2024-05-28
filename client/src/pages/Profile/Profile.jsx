@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import coverImage from "./assets/coverImage.jpg";
-import userImage from "./assets/userImage.jpg";
 import NewsFeed from "../../components/NewsFeed/NewsFeed";
 import Rightbar from "../../components/Rightbar/Rightbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { API, getUserProfileData } from "../../utils/api/api";
+import { API, getTimeLinePost, getUserProfileData } from "../../utils/api/api";
 import { useParams } from "react-router-dom";
 import noProfilePic from "./assets/user.png";
 import { AuthContext } from "../../context/AuthContext";
@@ -19,7 +18,9 @@ const Profile = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([]);
 
+  // get user profile info
   useEffect(() => {
     const getUserProfileInfo = async () => {
       try {
@@ -30,6 +31,19 @@ const Profile = () => {
       }
     };
     getUserProfileInfo();
+  }, [username]);
+
+  // get user posts
+  useEffect(() => {
+    const userPosts = async () => {
+      try {
+        const res = await getTimeLinePost(username);
+        setPosts(res.data.posts);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    userPosts();
   }, [username]);
 
   const handleFileChange = (e) => {
@@ -136,7 +150,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="flex">
-            <NewsFeed userPosts />
+            <NewsFeed posts={posts} sorted />
             <Rightbar user={user} />
           </div>
         </div>

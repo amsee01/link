@@ -1,40 +1,47 @@
-import React, { useContext, useEffect, useState } from "react";
-import UploadPost from "../UploadPost/UploadPost";
+import React, { useEffect, useState } from "react";
 import Post from "../Post/Post";
-import { Posts } from "../../data/dummyData";
-import axios from "axios";
-import { getAllPosts, getTimeLinePost } from "../../utils/api/api";
-import { useParams } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 
+const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
+  const [orderedPosts, setOrderedPosts] = useState([]);
 
-const NewsFeed = ({ userPosts }) => {
-  const [posts, setPosts] = useState([]);
-  const { username } = useParams();
-  const { user } = useContext(AuthContext);
   useEffect(() => {
-    const timelinePosts = async () => {
-      try {
-        const res = userPosts
-          ? await getTimeLinePost(username)
-          : await getAllPosts();
-        setPosts(res.data.posts);
-        
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    timelinePosts();
-  }, [username]);
+    let newOrderedPosts = posts;
+
+    if (sorted) {
+      newOrderedPosts = [...posts].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+    }
+
+    if (reversed) {
+      newOrderedPosts = [...posts].reverse();
+    }
+
+    setOrderedPosts(newOrderedPosts);
+  }, [posts, reversed, sorted]);
+
+  const handleClosePost = (index) => {
+    if (!setPosts) return;
+    setOrderedPosts([
+      ...orderedPosts.slice(0, index),
+      ...orderedPosts.slice(index + 1),
+    ]);
+
+    setPosts([...posts.slice(0, index), ...posts.slice(index + 1)]);
+  };
 
   return (
-    <div style={{ flex: 5.5 }} className="p-[10px]">
-      {/* {(!username || username === user?.username) && (
-          <UploadPost />
-      )} */}
-      {posts.map((post) => (
-        <Post key={post._id} post={post} />
-      ))}
+    <div style={{ flex: 8 }} className="p-[10px]">
+      {orderedPosts &&
+        orderedPosts.map((post, index) => (
+          <div key={index} className="post">
+            <Post
+              key={post._id}
+              onClose={setPosts ? () => handleClosePost(index) : null}
+              post={post}
+            />
+          </div>
+        ))}
     </div>
   );
 };

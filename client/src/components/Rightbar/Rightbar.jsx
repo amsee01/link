@@ -10,7 +10,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 const Rightbar = ({ user }) => {
-  const [friends, setFriends] = useState([]);
+  // const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [isFollowed, setIsFollowed] = useState(
     currentUser?.followings.includes(user?._id)
@@ -20,18 +20,18 @@ const Rightbar = ({ user }) => {
     setIsFollowed(currentUser?.followings.includes(user?._id));
   }, [currentUser, user?._id]);
 
-  useEffect(() => {
-    const getFriends = async () => {
-      try {
-        const res = await getUserFriends(user?._id);
-        setFriends(res.data.friends);
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getFriends();
-  }, [user?._id]);
+  // useEffect(() => {
+  //   const getFriends = async () => {
+  //     try {
+  //       const res = await getUserFriends(user?._id);
+  //       setFriends(res.data.friends);
+  //       console.log(res.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getFriends();
+  // }, [user?._id]);
 
   const handleFollow = async () => {
     try {

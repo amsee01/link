@@ -1,11 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { MdOutlineMoreVert } from "react-icons/md";
-import profilePic from "../../assets/profilepic.jpg";
-import postPic from "../../assets/postPic.jpg";
-import likeIcon from "../../assets/like.png";
+import { MdClose, MdOutlineMoreVert } from "react-icons/md";
 import heartIcon from "../../assets/heart.png";
-import { Users } from "../../data/dummyData";
-import axios from "axios";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import userPic from "./assets/user.png";
 import moment from "moment";
 import { getUserData, likeAndDislikePost } from "../../utils/api/api";
@@ -13,15 +9,16 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
 
-const Post = ({ post }) => {
-  const [like, setLike] = useState(post.likes?.length);
+const Post = ({ post, onClose }) => {
+  const [like, setLike] = useState(post.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const { user: currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
-  }, [currentUser?._id, post.likes]);
+    setLike(post.likes?.length);
+  }, [currentUser?._id, post]);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -63,8 +60,11 @@ const Post = ({ post }) => {
 
             <span className="text-sm">{moment(post.createdAt).fromNow()}</span>
           </div>
-          <div>
+          <div className="flex row">
             <MdOutlineMoreVert className="text-xl cursor-pointer" />
+            {onClose && (
+              <MdClose className="text-xl cursor-pointer" onClick={onClose} />
+            )}
           </div>
         </div>
       </div>
@@ -81,23 +81,24 @@ const Post = ({ post }) => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-[5px]">
-          <img
-            src={likeIcon}
-            alt="likeIcon"
-            className="w-[24px] h-[24px] cursor-pointer"
-            onClick={handleLike}
-          />
-          <img
-            src={heartIcon}
-            alt="heartIcon"
-            className="w-[24px] h-[24px] cursor-pointer"
-            onClick={handleLike}
-          />
+          {isLiked ? (
+            <FaHeart
+              className="w-[16px] h-[16px] cursor-pointer"
+              style={{ color: "#F53757" }}
+              onClick={handleLike}
+            />
+          ) : (
+            <FaRegHeart
+              className="w-[16px] h-[16px] cursor-pointer"
+              style={{ color: "#F53757" }}
+              onClick={handleLike}
+            />
+          )}
           <span className="text-sm">{like} likes</span>
         </div>
         <div>
           <span className="cursor-pointer border-b-[1px] border-slate-300 text-sm">
-            {post.comment} comments
+            {post.comments?.length} comments
           </span>
         </div>
       </div>
