@@ -7,6 +7,21 @@ import { POST_TYPES } from "../../constants/constants";
 import "./UploadPost.css"
 import TextareaAutosize from 'react-textarea-autosize';
 
+function setNativeValue(element, value) {
+  let lastValue = element.value;
+  element.value = value;
+  let event = new Event("input", { target: element, bubbles: true });
+  // React 15
+  event.simulated = true;
+  // React 16
+  let tracker = element._valueTracker;
+  if (tracker) {
+      tracker.setValue(lastValue);
+  }
+  element.dispatchEvent(event);
+}
+
+
 const UploadPost = () => {
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
@@ -20,6 +35,10 @@ const UploadPost = () => {
     try {
       const res = await uploadPost(user._id, desc, file, type);
       toast.success("Post has been Uploaded Successfully!");
+
+      var input = document.getElementById("posttypingarea");
+      setNativeValue(input, "");
+
       setFile(null);
       setPreview(null);
       setDesc("");
@@ -53,6 +72,7 @@ const UploadPost = () => {
             className="w-[50px] h-[50px] rounded-full mr-[10px] object-cover"
           />
           <TextareaAutosize
+            id="posttypingarea"
             type="text"
             placeholder="What's your Link request?"
             className="flex-grow focus:outline-none border border-gray-300 rounded-lg p-2"
