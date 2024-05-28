@@ -8,6 +8,8 @@ import { getUserData, likeAndDislikePost } from "../../utils/api/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
+import TextareaAutosize from 'react-textarea-autosize';
+import "./Post.css"
 
 const Post = ({ post, onClose }) => {
   const [like, setLike] = useState(post.likes?.length || 0);
@@ -101,6 +103,19 @@ const Post = ({ post, onClose }) => {
             {post.comments?.length} comments
           </span>
         </div>
+      </div>
+      <div class="top flex items-center mb-4">
+      <TextareaAutosize
+            id="newcomment"
+            type="text"
+            placeholder="Add a comment"
+            className="noresize flex-grow focus:outline-none border border-gray-300 rounded-lg p-2"
+            onChange={(e) => setDesc(e.target.value)}
+          />
+        <button
+          className="leftmargin noresize bg-green-600 text-white px-4 py-2 rounded-lg font-bold whitespace-nowrap">
+          Post
+        </button>
       </div>
     </div>
   );

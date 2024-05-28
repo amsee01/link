@@ -1,0 +1,8 @@
+.noresize {
+    margin-top: 10px;
+    resize: none;
+}
+
+.leftmargin{
+    margin-left: 5px;
+}
