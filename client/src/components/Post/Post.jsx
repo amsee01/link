@@ -47,11 +47,13 @@ const Post = ({ post, onClose }) => {
       <div className="p-[10px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <img
-              src={user.profilePicture ? user.profilePicture : userPic}
-              alt="Profile Picture"
-              className="w-[32px] h-[32px] rounded-full object-cover"
-            />
+            <Link to={`/profile/${user.username}`}>
+              <img
+                src={user.profilePicture ? user.profilePicture : userPic}
+                alt="Profile Picture"
+                className="w-[32px] h-[32px] rounded-full object-cover"
+              />
+            </Link>
             <Link to={`/profile/${user.username}`}>
               <span className="font-bold ml-[10px] mr-[10px]">
                 {user.username}
