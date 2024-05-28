@@ -1,13 +1,13 @@
 import React from "react";
 
-const CollapsedList = ({ posts, onSelectPost, selectedPosts }) => {
+const CollapsedList = ({ posts, onSelectPost, selectedPosts, refreshPosts }) => {
   // Sort posts in reverse chronological order
   const sortedPosts = [...posts].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
-
+  
   return (
-    <div className="collapsed-list">
+    <div className="collapsed-list" key={refreshPosts}>
       {sortedPosts.length === 0 ? (
         <p className="no-posts">No posts available for this category.</p>
       ) : (

@@ -22,7 +22,7 @@ function setNativeValue(element, value) {
 }
 
 
-const UploadPost = () => {
+const UploadPost = ({refreshFn}) => {
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,7 @@ const UploadPost = () => {
     try {
       const res = await uploadPost(user._id, desc, file, type);
       toast.success("Post has been Uploaded Successfully!");
+      refreshFn()
 
       var input = document.getElementById("posttypingarea");
       setNativeValue(input, "");

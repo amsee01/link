@@ -12,6 +12,7 @@ const Home = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [selectedPosts, setSelectedPosts] = useState([]);
   const [filter, setFilter] = useState(ALL);
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -45,17 +46,41 @@ const Home = () => {
     }
   };
 
+  const handleRefresh = () => {
+    const fetchPosts = async () => {
+      try {
+        const res = await getAllPosts();
+        setPosts(res.data.posts);
+        if (filter === ALL) {
+          // handle "Everything" case
+          setFilteredPosts(res.data.posts);
+        } else {
+          setFilteredPosts(
+            res.data.posts.filter((post) => post.type === filter)
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPosts();
+    setRefresh(Math.random());
+  }
+
   return (
     <>
       <Navbar />
       <div className="flex">
         <Sidebar onFilterChange={handleFilterChange} />
         <div className="flex-grow p-4">
-          <UploadPost />
+          <UploadPost
+            refreshFn = {handleRefresh} 
+          />
           <CollapsedList
             posts={filteredPosts}
             onSelectPost={handleToggleSelectPost}
             selectedPosts={selectedPosts}
+            refreshPosts={refresh}
           />
         </div>
         <div
