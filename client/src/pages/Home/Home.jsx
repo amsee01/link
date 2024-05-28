@@ -67,9 +67,34 @@ const Home = () => {
     setRefresh(Math.random());
   }
 
+  const handleSearch = (searchValue) => {
+    const fetchPosts = async () => {
+      try {
+        const res = await getAllPosts();
+        setPosts(res.data.posts);
+        if (filter === ALL) {
+          // handle "Everything" case
+          setFilteredPosts(
+            res.data.posts.filter((post) => post.desc.toLowerCase().includes(searchValue.toLowerCase()))
+          );
+        } else {
+          setFilteredPosts(
+            res.data.posts.filter((post) => post.type === filter && post.desc.toLowerCase().includes(searchValue.toLowerCase()))
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPosts();
+    setRefresh(Math.random());
+  }
+
   return (
     <>
-      <Navbar />
+      <Navbar
+        handleSearch = {handleSearch}
+      />
       <div className="flex">
         <Sidebar onFilterChange={handleFilterChange} />
         <div className="flex-grow p-4">

@@ -9,8 +9,12 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import noProfile from "../../pages/Profile/assets/user.png";
 
-const Navbar = () => {
+const Navbar = ({ handleSearch }) => {
   const { user } = useContext(AuthContext);
+
+  const handleInputChange = (event) => {
+    handleSearch(event.target.value);
+  }
 
   return (
     <div className="h-[50px] w-full bg-blue-600 flex items-center sticky top-0">
@@ -27,6 +31,7 @@ const Navbar = () => {
           <input
             type="text"
             className="search w-full focus:outline-none bg-none m-[10px]"
+            onInput={handleInputChange}
           />
         </div>
       </div>
