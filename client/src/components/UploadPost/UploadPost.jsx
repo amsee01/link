@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import userPic from "../Post/assets/user.png";
 import { POST_TYPES } from "../../constants/constants";
 import "./UploadPost.css"
+import TextareaAutosize from 'react-textarea-autosize';
 
 const UploadPost = () => {
   const [desc, setDesc] = useState("");
@@ -51,7 +52,7 @@ const UploadPost = () => {
             alt="profilepic"
             className="w-[50px] h-[50px] rounded-full mr-[10px] object-cover"
           />
-          <textarea
+          <TextareaAutosize
             type="text"
             placeholder="What's your Link request?"
             className="flex-grow focus:outline-none border border-gray-300 rounded-lg p-2"
