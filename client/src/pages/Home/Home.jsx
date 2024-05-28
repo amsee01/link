@@ -6,7 +6,7 @@ import CollapsedList from "../../components/CollapsedList/CollapsedList";
 import UploadPost from "../../components/UploadPost/UploadPost";
 import { getAllPosts } from "../../utils/api/api";
 import { ALL } from "../../constants/constants";
-
+let searchQuery = ""
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -14,24 +14,29 @@ const Home = () => {
   const [filter, setFilter] = useState(ALL);
   const [refresh, setRefresh] = useState(0);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await getAllPosts();
-        setPosts(res.data.posts);
-        if (filter === ALL) {
-          // handle "Everything" case
-          setFilteredPosts(res.data.posts);
-        } else {
-          setFilteredPosts(
-            res.data.posts.filter((post) => post.type === filter)
-          );
-        }
-      } catch (error) {
-        console.log(error);
+  const performFilter = async () => {
+    try {
+      const res = await getAllPosts();
+      console.log("TRIGGERED FILTER for " + searchQuery)
+      setPosts(res.data.posts);
+      if (filter === ALL) {
+        // handle "Everything" case
+        setFilteredPosts(
+          res.data.posts.filter((post) => post.desc.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+
+      } else {
+        setFilteredPosts(
+          res.data.posts.filter((post) => post.type === filter && post.desc.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
       }
-    };
-    fetchPosts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    performFilter();
   }, [filter]);
 
   const handleFilterChange = (category) => {
@@ -46,54 +51,19 @@ const Home = () => {
     }
   };
 
-  const handleRefresh = () => {
-    const fetchPosts = async () => {
-      try {
-        const res = await getAllPosts();
-        setPosts(res.data.posts);
-        if (filter === ALL) {
-          // handle "Everything" case
-          setFilteredPosts(res.data.posts);
-        } else {
-          setFilteredPosts(
-            res.data.posts.filter((post) => post.type === filter)
-          );
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPosts();
-    setRefresh(Math.random());
-  }
-
-  const handleSearch = (searchValue) => {
-    const fetchPosts = async () => {
-      try {
-        const res = await getAllPosts();
-        setPosts(res.data.posts);
-        if (filter === ALL) {
-          // handle "Everything" case
-          setFilteredPosts(
-            res.data.posts.filter((post) => post.desc.toLowerCase().includes(searchValue.toLowerCase()))
-          );
-        } else {
-          setFilteredPosts(
-            res.data.posts.filter((post) => post.type === filter && post.desc.toLowerCase().includes(searchValue.toLowerCase()))
-          );
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPosts();
-    setRefresh(Math.random());
+  const handleRefresh = async (searchValue) => {
+    if (searchValue !== undefined) {
+        console.log ("SEARCH VALUE: " + searchValue)
+        searchQuery = searchValue
+    }
+    performFilter();
+    await setRefresh(Math.random());
   }
 
   return (
     <>
       <Navbar
-        handleSearch = {handleSearch}
+        handleSearch = {handleRefresh}
       />
       <div className="flex">
         <Sidebar onFilterChange={handleFilterChange} />
