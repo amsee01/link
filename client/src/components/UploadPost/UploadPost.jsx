@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import userPic from "../Post/assets/user.png";
 import { POST_TYPES } from "../../constants/constants";
+import "./UploadPost.css"
 
 const UploadPost = () => {
   const [desc, setDesc] = useState("");
@@ -42,7 +43,7 @@ const UploadPost = () => {
   };
 
   return (
-    <div className="w-full h-[170px] rounded-lg shadow-lg p-[20px] bg-white mb-4">
+    <div className="stretchy w-full rounded-lg shadow-lg p-[20px] bg-white mb-4">
       <div className="wrapper flex flex-col">
         <div className="top flex items-center mb-4">
           <img
@@ -50,7 +51,7 @@ const UploadPost = () => {
             alt="profilepic"
             className="w-[50px] h-[50px] rounded-full mr-[10px] object-cover"
           />
-          <input
+          <textarea
             type="text"
             placeholder="What's your Link request?"
             className="flex-grow focus:outline-none border border-gray-300 rounded-lg p-2"
