@@ -8,14 +8,31 @@ import { getUserData, likeAndDislikePost } from "../../utils/api/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
+import { uploadComment } from "../../utils/api/api";
 import TextareaAutosize from 'react-textarea-autosize';
 import "./Post.css"
+
+function setNativeValue(element, value) {
+  let lastValue = element.value;
+  element.value = value;
+  let event = new Event("input", { target: element, bubbles: true });
+  // React 15
+  event.simulated = true;
+  // React 16
+  let tracker = element._valueTracker;
+  if (tracker) {
+      tracker.setValue(lastValue);
+  }
+  element.dispatchEvent(event);
+}
 
 const Post = ({ post, onClose }) => {
   const [like, setLike] = useState(post.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
+  const [desc, setDesc] = useState("");
 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
@@ -33,6 +50,22 @@ const Post = ({ post, onClose }) => {
     };
     getUserInfo();
   }, [post.userId]);
+
+  const handleCommentUpload = async () => {
+    setLoading(true);
+    try {
+      const res = await uploadComment(currentUser._id, desc, post._id);
+      toast.success("Post has been Uploaded Successfully!");
+      var input = document.getElementById("newcomment");
+      setNativeValue(input, "");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Post Upload failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLike = async () => {
     try {
@@ -113,8 +146,10 @@ const Post = ({ post, onClose }) => {
             onChange={(e) => setDesc(e.target.value)}
           />
         <button
+          disabled={loading}
+          onClick={handleCommentUpload}
           className="leftmargin noresize bg-green-600 text-white px-4 py-2 rounded-lg font-bold whitespace-nowrap">
-          Post
+           {loading ? "..." : "Post"}
         </button>
       </div>
     </div>
