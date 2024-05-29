@@ -27,7 +27,10 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
       ...orderedPosts.slice(index + 1),
     ]);
 
-    setPosts([...orderedPosts.slice(0, index), ...orderedPosts.slice(index + 1)]);
+    setPosts([
+      ...orderedPosts.slice(0, index),
+      ...orderedPosts.slice(index + 1),
+    ]);
   };
 
   return (

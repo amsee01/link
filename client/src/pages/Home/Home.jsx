@@ -6,7 +6,8 @@ import CollapsedList from "../../components/CollapsedList/CollapsedList";
 import UploadPost from "../../components/UploadPost/UploadPost";
 import { getAllPosts } from "../../utils/api/api";
 import { ALL } from "../../constants/constants";
-let searchQuery = ""
+
+let searchQuery = "";
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -17,17 +18,21 @@ const Home = () => {
   const performFilter = async () => {
     try {
       const res = await getAllPosts();
-      console.log("TRIGGERED FILTER for " + searchQuery)
       setPosts(res.data.posts);
       if (filter === ALL) {
         // handle "Everything" case
         setFilteredPosts(
-          res.data.posts.filter((post) => post.desc.toLowerCase().includes(searchQuery.toLowerCase()))
+          res.data.posts.filter((post) =>
+            post.desc.toLowerCase().includes(searchQuery.toLowerCase())
+          )
         );
-
       } else {
         setFilteredPosts(
-          res.data.posts.filter((post) => post.type === filter && post.desc.toLowerCase().includes(searchQuery.toLowerCase()))
+          res.data.posts.filter(
+            (post) =>
+              post.type === filter &&
+              post.desc.toLowerCase().includes(searchQuery.toLowerCase())
+          )
         );
       }
     } catch (error) {
@@ -53,24 +58,20 @@ const Home = () => {
 
   const handleRefresh = async (searchValue) => {
     if (searchValue !== undefined) {
-        console.log ("SEARCH VALUE: " + searchValue)
-        searchQuery = searchValue
+      console.log("SEARCH VALUE: " + searchValue);
+      searchQuery = searchValue;
     }
     performFilter();
     await setRefresh(Math.random());
-  }
+  };
 
   return (
     <>
-      <Navbar
-        handleSearch = {handleRefresh}
-      />
+      <Navbar handleSearch={handleRefresh} />
       <div className="flex">
         <Sidebar onFilterChange={handleFilterChange} />
         <div className="flex-grow p-4">
-          <UploadPost
-            refreshFn = {handleRefresh} 
-          />
+          <UploadPost refreshFn={handleRefresh} />
           <CollapsedList
             posts={filteredPosts}
             onSelectPost={handleToggleSelectPost}

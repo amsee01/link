@@ -4,6 +4,7 @@ import coverImage from "./assets/coverImage.jpg";
 import NewsFeed from "../../components/NewsFeed/NewsFeed";
 import Rightbar from "../../components/Rightbar/Rightbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import { ALL } from "../../constants/constants";
 import { API, getTimeLinePost, getUserProfileData } from "../../utils/api/api";
 import { useParams } from "react-router-dom";
 import noProfilePic from "./assets/user.png";
@@ -19,6 +20,8 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [filter, setFilter] = useState(ALL);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
   // get user profile info
   useEffect(() => {
@@ -45,6 +48,16 @@ const Profile = () => {
     };
     userPosts();
   }, [username]);
+
+  // filter user posts
+  useEffect(() => {
+    // handle "Everything" case
+    if (filter === ALL) {
+      setFilteredPosts(posts);
+    } else {
+      setFilteredPosts(posts.filter((post) => post.type === filter));
+    }
+  }, [posts, filter]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -90,11 +103,15 @@ const Profile = () => {
     setEditMode(false);
   };
 
+  const handleFilterChange = (category) => {
+    setFilter(category);
+  };
+
   return (
     <div>
       <Navbar />
       <div className="flex">
-        <Sidebar />
+        <Sidebar onFilterChange={handleFilterChange} />
         <div style={{ flex: 9 }}>
           <div>
             <div className="h-[350px] relative">
@@ -150,7 +167,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="flex">
-            <NewsFeed posts={posts} sorted />
+            <NewsFeed posts={filteredPosts} sorted />
             <Rightbar user={user} />
           </div>
         </div>
