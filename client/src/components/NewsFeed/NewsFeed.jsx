@@ -20,17 +20,11 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
     setOrderedPosts(newOrderedPosts);
   }, [posts, reversed, sorted]);
 
-  const handleClosePost = (index) => {
+  const handleClosePost = (postId) => {
     if (!setPosts) return;
-    setOrderedPosts([
-      ...orderedPosts.slice(0, index),
-      ...orderedPosts.slice(index + 1),
-    ]);
+    setOrderedPosts(orderedPosts.filter((post) => post._id !== postId));
 
-    setPosts([
-      ...orderedPosts.slice(0, index),
-      ...orderedPosts.slice(index + 1),
-    ]);
+    setPosts(posts.filter((post) => post._id !== postId));
   };
 
   return (
@@ -40,7 +34,7 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
           <div key={index} className="post">
             <Post
               key={post._id}
-              onClose={setPosts ? () => handleClosePost(index) : null}
+              onClose={setPosts ? () => handleClosePost(post._id) : null}
               post={post}
             />
           </div>
