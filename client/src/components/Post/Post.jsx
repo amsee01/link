@@ -8,12 +8,31 @@ import { getUserData, likeAndDislikePost } from "../../utils/api/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
+import { uploadComment } from "../../utils/api/api";
+import TextareaAutosize from 'react-textarea-autosize';
+import "./Post.css"
 
-const Post = ({ post, onClose }) => {
+function setNativeValue(element, value) {
+  let lastValue = element.value;
+  element.value = value;
+  let event = new Event("input", { target: element, bubbles: true });
+  // React 15
+  event.simulated = true;
+  // React 16
+  let tracker = element._valueTracker;
+  if (tracker) {
+      tracker.setValue(lastValue);
+  }
+  element.dispatchEvent(event);
+}
+
+const Post = ({ post, onClose, comments, refreshComments }) => {
   const [like, setLike] = useState(post.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
+  const [desc, setDesc] = useState("");
 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
@@ -31,6 +50,23 @@ const Post = ({ post, onClose }) => {
     };
     getUserInfo();
   }, [post.userId]);
+
+  const handleCommentUpload = async () => {
+    setLoading(true);
+    try {
+      const res = await uploadComment(currentUser._id, currentUser.username, desc, post._id);
+      toast.success("Post has been Uploaded Successfully!");
+      refreshComments();
+      var input = document.getElementById("newcomment");
+      setNativeValue(input, "");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Post Upload failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLike = async () => {
     try {
@@ -103,6 +139,46 @@ const Post = ({ post, onClose }) => {
             {post.comments?.length} comments
           </span>
         </div>
+      </div>
+      <div class="top flex items-center mb-4">
+      <TextareaAutosize
+            id="newcomment"
+            type="text"
+            placeholder="Add a comment"
+            className="noresize flex-grow focus:outline-none border border-gray-300 rounded-lg p-2"
+            onChange={(e) => setDesc(e.target.value)}
+          />
+        <button
+          disabled={loading}
+          onClick={handleCommentUpload}
+          className="leftmargin noresize bg-green-600 text-white px-4 py-2 rounded-lg font-bold whitespace-nowrap">
+           {loading ? "..." : "Post"}
+        </button>
+      </div>
+      <div className="collapsed-list">
+      {comments.length === 0 ? (
+        <p className="no-posts">No comments yet.</p>
+      ) : (
+        comments.map((comment) => {
+          return (
+            <div
+              key={comment._id}
+              className={`post-preview flex items-center p-2 border-b border-gray-200`}
+            >
+              <div className="flex-grow">
+                <p className="font-bold text-sm">
+                  {comment.desc}
+                </p>
+                <p className="text-xs text-gray-500">{comment.userName}</p>
+              </div>
+              <div
+                className={`text-xs flex flex-col items-end`}
+              >
+              </div>
+            </div>
+          );
+        })
+      )}
       </div>
     </div>
   );

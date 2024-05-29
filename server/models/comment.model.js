@@ -7,14 +7,21 @@ export const commentSchema = new Schema(
       type: String,
       required: true,
     },
-    text: {
+    userName: {
+      type: String,
+      required: true,
+    },
+    desc: {
+      type: String,
+      required: true,
+    },
+    postId: {
       type: String,
       required: true,
     },
   },
   {
     timestamps: true,
-    _id: false, // Prevents Mongoose from creating _id for subdocuments
   }
 );
 

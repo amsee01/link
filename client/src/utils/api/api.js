@@ -14,6 +14,7 @@ export const getUserProfileData = (username) =>
 
 export const likeAndDislikePost = (postId, userId) =>
   API.put(`/posts/like-post/${postId}`, { userId: userId });
+
 export const uploadPost = async (userId, desc, img, type) => {
   const formData = new FormData();
   formData.append("userId", userId);
@@ -32,6 +33,32 @@ export const uploadPost = async (userId, desc, img, type) => {
 
   return res.data;
 };
+
+export const uploadComment = async(userId, userName, desc, postId) => {
+  const commentForm = new FormData();
+  commentForm.append("userId", userId);
+  commentForm.append("userName", userName);
+  commentForm.append("desc", desc);
+  commentForm.append("postId", postId);
+
+  console.log("API RECEIVED:")
+  for (var key of commentForm.entries()) {
+    console.log(key[0] + ', ' + key[1]);
+  }
+
+  const res = await API.post("/comments/create-comment", commentForm, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.data;
+}
+
+export const getPostComments = (postId) => API.get(`/comments/get-comments/${postId}`);
+
+// export const getPostComments = async(postId) => {
+//   API.get(`/comments/get-comments/${postId}`);
+// }
 
 export const getUserFriends = (userId) => API.get(`/users/friends/${userId}`);
 export const unfollowUser = (userId, id) =>

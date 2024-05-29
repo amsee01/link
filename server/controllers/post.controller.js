@@ -13,12 +13,12 @@ export const createPostController = async (req, res) => {
     const newPost = await createPost(req.body, req.file ? req.file.path : null);
     res.status(200).json({
       newPost,
-      message: "Post has been created Successfully",
+      message: "Comment Added!",
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Post creation Failed",
+      message: "Something is wrong :/",
       err,
     });
   }
