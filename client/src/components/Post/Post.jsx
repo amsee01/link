@@ -167,7 +167,7 @@ const Post = ({ post, onClose, comments, refreshComments }) => {
               className={`post-preview flex items-center p-2 border-b border-gray-200`}
             >
               <div className="flex-grow">
-                <p className="font-bold text-sm">
+                <p className="font-bold text-sm" style={{ whiteSpace: 'pre-wrap' }}>
                   {comment.desc}
                 </p>
                 <p className="text-xs text-gray-500">{comment.userName}</p>
