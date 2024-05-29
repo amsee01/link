@@ -2,7 +2,7 @@ import axios from "axios";
 import { Form } from "react-router-dom";
 
 export const API = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: "http://localhost:5001/api/v1",
   /*baseURL: "https://socio-junkie-backend.onrender.com/api/v1",*/
 });
 
@@ -35,6 +35,7 @@ export const uploadPost = async (userId, desc, img, type) => {
   return res.data;
 };
 
+<<<<<<< HEAD
 export const deletePost = async (userId, deletedPost) => {
   const deleteForm = new FormData()
   deleteForm.append("userId", userId);
@@ -62,6 +63,9 @@ export const deleteComment = async (userId, deletedComment) => {
 }
 
 export const uploadComment = async(userId, userName, desc, postId) => {
+=======
+export const uploadComment = async (userId, userName, desc, postId) => {
+>>>>>>> 52946da (Changed server port.)
   const commentForm = new FormData();
   commentForm.append("userId", userId);
   commentForm.append("userName", userName);
