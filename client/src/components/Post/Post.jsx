@@ -78,6 +78,7 @@ const Post = ({ post, onClose, comments, refreshComments }) => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
+
   return (
     <div className="w-full rounded-md shadow-lg mt-[0px] mb-[30px] p-[10px]">
       <div className="p-[10px]">
@@ -107,7 +108,7 @@ const Post = ({ post, onClose, comments, refreshComments }) => {
         </div>
       </div>
       <div className="mt-[20px] mb-[20px]">
-        <span>{post?.desc}</span>
+        <span style={{ whiteSpace: 'pre-wrap' }}>{post?.desc}</span>
         {post.img && (
           <img
             src={post.img}
