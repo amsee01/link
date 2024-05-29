@@ -9,7 +9,7 @@ import routes from "./routes/routes.js";
 const app = express();
 dotenv.config();
 
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
   res.send("Backend is working!")
 })
 
@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use(routes);
 
-app.listen(5000, () => {
+app.listen(5001, () => {
   console.log("Server is Running");
   dbConnect();
 });

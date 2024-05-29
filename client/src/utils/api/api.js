@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: "http://localhost:5001/api/v1",
   /*baseURL: "https://socio-junkie-backend.onrender.com/api/v1",*/
 });
 
@@ -34,7 +34,7 @@ export const uploadPost = async (userId, desc, img, type) => {
   return res.data;
 };
 
-export const uploadComment = async(userId, userName, desc, postId) => {
+export const uploadComment = async (userId, userName, desc, postId) => {
   const commentForm = new FormData();
   commentForm.append("userId", userId);
   commentForm.append("userName", userName);
