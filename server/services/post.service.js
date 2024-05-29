@@ -83,8 +83,7 @@ export const getTimelinePosts = async (params) => {
         return PostModel.find({ userId: friendId });
       })
     );
-
-    return userPosts.concat({ ...timelinePosts });
+    return [...userPosts, ...timelinePosts];
   } catch (error) {
     throw error;
   }
