@@ -6,6 +6,7 @@ import CollapsedList from "../../components/CollapsedList/CollapsedList";
 import UploadPost from "../../components/UploadPost/UploadPost";
 import { getAllPosts } from "../../utils/api/api";
 import { ALL } from "../../constants/constants";
+
 let searchQuery = "";
 const Home = () => {
   const [posts, setPosts] = useState([]);
