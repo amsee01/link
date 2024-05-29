@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Post from "../Post/Post";
-import { getPostComments } from "../../utils/api/api";
+import { AuthContext } from "../../context/AuthContext";
+import { getPostComments, deletePost } from "../../utils/api/api";
 
 const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
   const [orderedPosts, setOrderedPosts] = useState([]);
   const [postComments, setPostComments] = useState({});
   const [commentRefresh, setCommentRefresh] = useState(0)
+  const { user } = useContext(AuthContext);
 
   const getComments = async ( currentPosts ) => {
     let iter = 0;
@@ -45,6 +47,10 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
     setPosts(posts.filter((post) => post._id !== postId));
   };
 
+  const handleDeletePost = async (post) => {
+    const res = await deletePost(user._id, post)
+  }
+
   const handleRefresh = async () => {
     await getComments(orderedPosts)
     await setCommentRefresh(Math.random());
@@ -64,6 +70,7 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
               comments={ 
                 post._id in postComments ? postComments[post._id] : []
               }
+              onDelete={setPosts ? () => handleDeletePost(post) : null}
             />
           </div>
         ))}

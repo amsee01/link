@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { MdClose, MdOutlineMoreVert } from "react-icons/md";
+import { MdClose, MdOutlineMoreVert, MdOutlineDelete } from "react-icons/md";
 import heartIcon from "../../assets/heart.png";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import userPic from "./assets/user.png";
@@ -26,7 +26,7 @@ function setNativeValue(element, value) {
   element.dispatchEvent(event);
 }
 
-const Post = ({ post, onClose, comments, refreshComments }) => {
+const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
   const [like, setLike] = useState(post.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
@@ -100,7 +100,7 @@ const Post = ({ post, onClose, comments, refreshComments }) => {
             <span className="text-sm">{moment(post.createdAt).fromNow()}</span>
           </div>
           <div className="flex row">
-            <MdOutlineMoreVert className="text-xl cursor-pointer" />
+            <MdOutlineDelete className="text-xl cursor-pointer" onClick={onDelete}/>
             {onClose && (
               <MdClose className="text-xl cursor-pointer" onClick={onClose} />
             )}
