@@ -1,8 +1,6 @@
 import CommentModel from "../models/comment.model.js"
 
 export const createComment = async (body) => {
-    console.log("RECEVIED:::")
-    console.log(body)
   try {
     const newCommentData = {
       ...body,
@@ -34,7 +32,8 @@ export const deleteComment = async (params, body) => {
 
 export const getComments = async (params) => {
   try {
-    const comments = await CommentModel.find({ postId: params.postId });
+    console.log("GETTING Comments for post id " + params.id)
+    const comments = await CommentModel.aggregate([{ $match: { postId: params.id } }]);
     return comments;
   } catch (error) {
     throw error;

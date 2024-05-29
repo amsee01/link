@@ -26,7 +26,7 @@ function setNativeValue(element, value) {
   element.dispatchEvent(event);
 }
 
-const Post = ({ post, onClose }) => {
+const Post = ({ post, onClose, comments, refreshComments }) => {
   const [like, setLike] = useState(post.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
@@ -54,8 +54,9 @@ const Post = ({ post, onClose }) => {
   const handleCommentUpload = async () => {
     setLoading(true);
     try {
-      const res = await uploadComment(currentUser._id, desc, post._id);
+      const res = await uploadComment(currentUser._id, currentUser.username, desc, post._id);
       toast.success("Post has been Uploaded Successfully!");
+      refreshComments();
       var input = document.getElementById("newcomment");
       setNativeValue(input, "");
       setLoading(false);
@@ -151,6 +152,31 @@ const Post = ({ post, onClose }) => {
           className="leftmargin noresize bg-green-600 text-white px-4 py-2 rounded-lg font-bold whitespace-nowrap">
            {loading ? "..." : "Post"}
         </button>
+      </div>
+      <div className="collapsed-list">
+      {comments.length === 0 ? (
+        <p className="no-posts">No comments yet.</p>
+      ) : (
+        comments.map((comment) => {
+          return (
+            <div
+              key={comment._id}
+              className={`post-preview flex items-center p-2 border-b border-gray-200`}
+            >
+              <div className="flex-grow">
+                <p className="font-bold text-sm">
+                  {comment.desc}
+                </p>
+                <p className="text-xs text-gray-500">{comment.userName}</p>
+              </div>
+              <div
+                className={`text-xs flex flex-col items-end`}
+              >
+              </div>
+            </div>
+          );
+        })
+      )}
       </div>
     </div>
   );

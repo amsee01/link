@@ -6,8 +6,6 @@ import {
   
   export const createCommentController = async (req, res) => {
     try {
-      console.log("CONTROLLER RECEIVED: ")
-      console.log(req.body)
       const newComment = await createComment(req.body);
       res.status(200).json({
         newComment,
@@ -41,6 +39,7 @@ import {
   export const getCommentsController = async (req, res) => {
     try {
       const comments = await getComments(req.params);
+      console.log(comments)
       res.status(200).json({
         comments,
         message: "Comments have been fetched Successfully",

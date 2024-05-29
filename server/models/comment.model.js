@@ -7,6 +7,10 @@ export const commentSchema = new Schema(
       type: String,
       required: true,
     },
+    userName: {
+      type: String,
+      required: true,
+    },
     desc: {
       type: String,
       required: true,

@@ -34,9 +34,10 @@ export const uploadPost = async (userId, desc, img, type) => {
   return res.data;
 };
 
-export const uploadComment = async(userId, desc, postId) => {
+export const uploadComment = async(userId, userName, desc, postId) => {
   const commentForm = new FormData();
   commentForm.append("userId", userId);
+  commentForm.append("userName", userName);
   commentForm.append("desc", desc);
   commentForm.append("postId", postId);
 
@@ -52,6 +53,12 @@ export const uploadComment = async(userId, desc, postId) => {
   });
   return res.data;
 }
+
+export const getPostComments = (postId) => API.get(`/comments/get-comments/${postId}`);
+
+// export const getPostComments = async(postId) => {
+//   API.get(`/comments/get-comments/${postId}`);
+// }
 
 export const getUserFriends = (userId) => API.get(`/users/friends/${userId}`);
 export const unfollowUser = (userId, id) =>
