@@ -75,8 +75,6 @@ export const followUser = async (userdata, updateData) => {
     try {
       const user = await UserModel.findById(userdata.userId);
       const currentUser = await UserModel.findById(updateData.id);
-      // console.log(user);
-      // console.log(currentUser);
       if (!user.followings.includes(updateData.id)) {
         await currentUser.updateOne({ $push: { followers: userdata.userId } });
         await user.updateOne({ $push: { followings: updateData.id } });
@@ -97,8 +95,6 @@ export const unfollowUser = async (userdata, updateData) => {
     try {
       const user = await UserModel.findById(userdata.userId);
       const currentUser = await UserModel.findById(updateData.id);
-      // console.log(user);
-      // console.log(updateData);
       if (user.followings.includes(updateData.id)) {
         await currentUser.updateOne(
           { $pull: { followers: userdata.userId } },
