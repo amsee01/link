@@ -56,6 +56,10 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
     getUserInfo();
   }, [post.userId]);
 
+  const handleCommentDelete = async (comment) => {
+    console.log(comment)
+  }
+
   const handleCommentUpload = async () => {
     setLoading(true);
     try {
@@ -181,6 +185,7 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
                 className={`text-xs flex flex-col items-end`}
               >
               </div>
+              <MdOutlineDelete className="text-xl cursor-pointer" onClick={() => handleCommentDelete(comment)} size={15}/>
             </div>
           );
         })
