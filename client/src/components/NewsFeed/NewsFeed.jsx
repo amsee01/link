@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Post from "../Post/Post";
 import { AuthContext } from "../../context/AuthContext";
 import { getPostComments, deletePost } from "../../utils/api/api";
+import { toast } from "react-toastify"
 
 const NewsFeed = ({ posts, reversed, setPosts, sorted, removePost, refreshCollapsed }) => {
   const [orderedPosts, setOrderedPosts] = useState([]);
@@ -50,6 +51,12 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted, removePost, refreshCollap
   const handleDeletePost = async (post) => {
     await removePost(post)
     const res = await deletePost(user._id, post)
+    console.log(res)
+    if (res.message.includes("Success")) {
+      toast.success("Post has been deleted successfully!");
+    } else {
+      toast.error("Something went wrong.");
+    }
     await refreshCollapsed();
   }
 
