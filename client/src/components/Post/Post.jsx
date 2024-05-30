@@ -191,7 +191,7 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
                 className={`text-xs flex flex-col items-end`}
               >
               </div>
-              {<MdOutlineDelete className="text-xl cursor-pointer" onClick={() => handleCommentDelete(comment)} size={15}/>}
+              {comment.userId === currentUser._id && <MdOutlineDelete className="text-xl cursor-pointer" onClick={() => handleCommentDelete(comment)} size={15}/>}
             </div>
           );
         })
