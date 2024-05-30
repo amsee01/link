@@ -1,5 +1,6 @@
 import PostModel from "../models/post.model.js";
 import UserModel from "../models/user.model.js";
+import CommentModel from "../models/comment.model.js";
 
 export const createPost = async (body, file) => {
   try {
@@ -38,9 +39,11 @@ export const updatePost = async (params, body) => {
 
 export const deletePost = async (params, body) => {
   try {
-    const deletedPost = await PostModel.findById(params.id);
+    console.log(body)
+    const deletedPost = JSON.parse(body.post);
     if (deletedPost.userId === body.userId) {
-      await PostModel.deleteOne();
+      await PostModel.deleteOne({ _id : deletedPost._id });
+      await CommentModel.deleteMany({ postId : deletedPost._id })
       return deletedPost;
     } else {
       throw new Error("You can delete only your post");

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { MdClose, MdOutlineMoreVert } from "react-icons/md";
+import { MdClose, MdOutlineMoreVert, MdOutlineDelete } from "react-icons/md";
 import heartIcon from "../../assets/heart.png";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import userPic from "./assets/user.png";
 import moment from "moment";
-import { getUserData, likeAndDislikePost } from "../../utils/api/api";
+import { getUserData, likeAndDislikePost, deleteComment } from "../../utils/api/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
@@ -26,17 +26,22 @@ function setNativeValue(element, value) {
   element.dispatchEvent(event);
 }
 
-const Post = ({ post, onClose, comments, refreshComments }) => {
+const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
   const [like, setLike] = useState(post.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
   const [desc, setDesc] = useState("");
+  const [matchUser, setMatchUser] = useState(false)
 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
     setLike(post.likes?.length);
+
+    if(currentUser._id == post.userId) {
+      setMatchUser(true)
+    }
   }, [currentUser?._id, post]);
 
   useEffect(() => {
@@ -50,6 +55,16 @@ const Post = ({ post, onClose, comments, refreshComments }) => {
     };
     getUserInfo();
   }, [post.userId]);
+
+  const handleCommentDelete = async (comment) => {
+    const res = await deleteComment(currentUser._id, comment)
+    if (res.message.includes("Success")) {
+      toast.success("Comment has been deleted successfully!");
+    } else {
+      toast.error("Something went wrong.");
+    }
+    await refreshComments();
+  };
 
   const handleCommentUpload = async () => {
     setLoading(true);
@@ -100,7 +115,7 @@ const Post = ({ post, onClose, comments, refreshComments }) => {
             <span className="text-sm">{moment(post.createdAt).fromNow()}</span>
           </div>
           <div className="flex row">
-            <MdOutlineMoreVert className="text-xl cursor-pointer" />
+            {matchUser && <MdOutlineDelete className="text-xl cursor-pointer" onClick={onDelete}/>}
             {onClose && (
               <MdClose className="text-xl cursor-pointer" onClick={onClose} />
             )}
@@ -167,7 +182,7 @@ const Post = ({ post, onClose, comments, refreshComments }) => {
               className={`post-preview flex items-center p-2 border-b border-gray-200`}
             >
               <div className="flex-grow">
-                <p className="font-bold text-sm">
+                <p className="font-bold text-sm" style={{ whiteSpace: 'pre-wrap' }}>
                   {comment.desc}
                 </p>
                 <p className="text-xs text-gray-500">{comment.userName}</p>
@@ -176,6 +191,7 @@ const Post = ({ post, onClose, comments, refreshComments }) => {
                 className={`text-xs flex flex-col items-end`}
               >
               </div>
+              {comment.userId === currentUser._id && <MdOutlineDelete className="text-xl cursor-pointer" onClick={() => handleCommentDelete(comment)} size={15}/>}
             </div>
           );
         })
