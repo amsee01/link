@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/create-comment", createCommentController);
 
 //delete comment
-router.delete("/delete-comment/:id", deleteCommentController);
+router.post("/delete-comment", deleteCommentController);
 
 //get comments
 router.get("/get-comments/:id", getCommentsController);

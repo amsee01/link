@@ -46,6 +46,19 @@ export const deletePost = async (userId, deletedPost) => {
     },
   });
   return res.data;
+};
+
+export const deleteComment = async (userId, deletedComment) => {
+  const deleteForm = new FormData()
+  deleteForm.append("userId", userId);
+  deleteForm.append("post", JSON.stringify(deletedComment));
+
+  const res = await API.post(`/comments/delete-comment`, deleteForm, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.data;
 }
 
 export const uploadComment = async(userId, userName, desc, postId) => {

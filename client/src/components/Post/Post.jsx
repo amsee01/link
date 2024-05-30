@@ -4,7 +4,7 @@ import heartIcon from "../../assets/heart.png";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import userPic from "./assets/user.png";
 import moment from "moment";
-import { getUserData, likeAndDislikePost } from "../../utils/api/api";
+import { getUserData, likeAndDislikePost, deleteComment } from "../../utils/api/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
@@ -57,8 +57,14 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
   }, [post.userId]);
 
   const handleCommentDelete = async (comment) => {
-    console.log(comment)
-  }
+    const res = await deleteComment(currentUser._id, comment)
+    if (res.message.includes("Success")) {
+      toast.success("Comment has been deleted successfully!");
+    } else {
+      toast.error("Something went wrong.");
+    }
+    await refreshComments();
+  };
 
   const handleCommentUpload = async () => {
     setLoading(true);
@@ -185,7 +191,7 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
                 className={`text-xs flex flex-col items-end`}
               >
               </div>
-              <MdOutlineDelete className="text-xl cursor-pointer" onClick={() => handleCommentDelete(comment)} size={15}/>
+              {<MdOutlineDelete className="text-xl cursor-pointer" onClick={() => handleCommentDelete(comment)} size={15}/>}
             </div>
           );
         })

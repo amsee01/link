@@ -18,9 +18,9 @@ export const createComment = async (body) => {
 
 export const deleteComment = async (params, body) => {
   try {
-    const deletedComment = await CommentModel.findById(params.id);
+    const deletedComment = JSON.parse(body.post);
     if (deletedComment.userId === body.userId) {
-      await deletedComment.deleteOne();
+      await CommentModel.deleteOne({ _id : deletedComment._id });
       return deletedComment;
     } else {
       throw new Error("You can delete only your post");

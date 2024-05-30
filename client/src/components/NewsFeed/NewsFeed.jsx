@@ -51,7 +51,6 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted, removePost, refreshCollap
   const handleDeletePost = async (post) => {
     await removePost(post)
     const res = await deletePost(user._id, post)
-    console.log(res)
     if (res.message.includes("Success")) {
       toast.success("Post has been deleted successfully!");
     } else {
