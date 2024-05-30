@@ -58,7 +58,6 @@ const Home = () => {
 
   const handleRefresh = async (searchValue) => {
     if (searchValue !== undefined) {
-      console.log("SEARCH VALUE: " + searchValue);
       searchQuery = searchValue;
     }
     performFilter();
@@ -90,6 +89,8 @@ const Home = () => {
             <NewsFeed
               posts={selectedPosts}
               setPosts={setSelectedPosts}
+              removePost={handleToggleSelectPost}
+              refreshCollapsed={handleRefresh}
               reversed={true}
             />
           )}

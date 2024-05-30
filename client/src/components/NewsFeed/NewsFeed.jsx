@@ -3,7 +3,7 @@ import Post from "../Post/Post";
 import { AuthContext } from "../../context/AuthContext";
 import { getPostComments, deletePost } from "../../utils/api/api";
 
-const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
+const NewsFeed = ({ posts, reversed, setPosts, sorted, removePost, refreshCollapsed }) => {
   const [orderedPosts, setOrderedPosts] = useState([]);
   const [postComments, setPostComments] = useState({});
   const [commentRefresh, setCommentRefresh] = useState(0)
@@ -48,7 +48,9 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted }) => {
   };
 
   const handleDeletePost = async (post) => {
+    await removePost(post)
     const res = await deletePost(user._id, post)
+    await refreshCollapsed();
   }
 
   const handleRefresh = async () => {
