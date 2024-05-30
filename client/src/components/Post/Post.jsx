@@ -33,10 +33,15 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
   const [loading, setLoading] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
   const [desc, setDesc] = useState("");
+  const [matchUser, setMatchUser] = useState(false)
 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
     setLike(post.likes?.length);
+
+    if(currentUser._id == post.userId) {
+      setMatchUser(true)
+    }
   }, [currentUser?._id, post]);
 
   useEffect(() => {
@@ -100,7 +105,7 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
             <span className="text-sm">{moment(post.createdAt).fromNow()}</span>
           </div>
           <div className="flex row">
-            <MdOutlineDelete className="text-xl cursor-pointer" onClick={onDelete}/>
+            {matchUser && <MdOutlineDelete className="text-xl cursor-pointer" onClick={onDelete}/>}
             {onClose && (
               <MdClose className="text-xl cursor-pointer" onClick={onClose} />
             )}
