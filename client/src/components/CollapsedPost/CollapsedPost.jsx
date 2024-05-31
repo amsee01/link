@@ -1,75 +1,31 @@
-import React, { useContext, useEffect, useState } from "react";
-import { MdOutlineMoreVert } from "react-icons/md";
-import profilePic from "../../assets/profilepic.jpg";
-import postPic from "../../assets/postPic.jpg";
-import likeIcon from "../../assets/like.png";
-import heartIcon from "../../assets/heart.png";
-import { Users } from "../../data/dummyData";
-import axios from "axios";
-import userPic from "./assets/user.png";
-import moment from "moment";
-import { getUserData, likeAndDislikePost } from "../../utils/api/api";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { AuthContext } from "../../context/AuthContext";
-import NewsFeed from "../NewsFeed/NewsFeed";
+import React from "react";
 
-const Post = ({ post }) => {
-  const [like, setLike] = useState(post.likes?.length);
-  const [isLiked, setIsLiked] = useState(false);
-  const [user, setUser] = useState({});
-  const { user: currentUser } = useContext(AuthContext);
-
-  useEffect(() => {
-    setIsLiked(post.likes?.includes(currentUser._id));
-  }, [currentUser?._id, post.likes]);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        const res = await getUserData(post.userId);
-        setUser(res.data.userInfo);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUserInfo();
-  }, [post.userId]);
-
-  const handleLike = async () => {
-    try {
-      await likeAndDislikePost(post._id, currentUser._id);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
-    }
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
-  };
+const CollapsedPost = ({ post, isSelected, numComments, onSelectPost }) => {
+  const MAX_TEXT_LENGTH = 50;
   return (
-    <div className="w-full rounded-md shadow-lg mt-[30px] mb-[30px] p-[10px]">
-      <div className="mt-[20px] mb-[20px]" style={{ height:"20px", maxWidth:"100%", overflow: "hidden", textOverflow: "ellipsis" }}>
-        <span onClick={ () => {
-          console.log("Clicked");
-          NewsFeed(post);
-        }}>{post?.desc}</span>
+    <div
+      className={`post-preview flex items-center p-2 border-b border-gray-200 hover:${
+        isSelected ? "bg-black" : "bg-gray-100"
+      } cursor-pointer ${isSelected ? "bg-blue-500 text-white" : ""}`}
+      onClick={() => onSelectPost(post)}
+    >
+      <div className="flex-grow">
+        <p className="font-bold text-sm">
+          {post.desc.substring(0, MAX_TEXT_LENGTH)}
+          {post.desc.length > MAX_TEXT_LENGTH ? "..." : ""}
+        </p>
+        <p className="text-xs text-gray-500">{post.username}</p>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-[5px]">
-          <img
-            src={likeIcon}
-            alt="likeIcon"
-            className="w-[24px] h-[24px] cursor-pointer"
-            onClick={handleLike}
-          />
-          <span className="text-sm">{like} likes</span>
-          <span className="text-sm ml-[10px] mr-[10px]">
-                ({user.username})
-              </span>
-        </div>
+      <div
+        className={`text-xs flex flex-col items-end ${
+          isSelected ? "text-gray-200" : "text-gray-500"
+        }`}
+      >
+        <p>{post.likes.length} likes</p>
+        <p>{numComments} comments</p>
       </div>
     </div>
   );
 };
 
-export default Post;
+export default CollapsedPost;
