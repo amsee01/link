@@ -1,6 +1,7 @@
 import React from "react";
 
-const CollapsedPost = ({ post, isSelected, onSelectPost }) => {
+const CollapsedPost = ({ post, isSelected, numComments, onSelectPost }) => {
+  const MAX_TEXT_LENGTH = 50;
   return (
     <div
       className={`post-preview flex items-center p-2 border-b border-gray-200 hover:${
@@ -9,7 +10,10 @@ const CollapsedPost = ({ post, isSelected, onSelectPost }) => {
       onClick={() => onSelectPost(post)}
     >
       <div className="flex-grow">
-        <p className="font-bold text-sm">{post.desc.substring(0, 50)}...</p>
+        <p className="font-bold text-sm">
+          {post.desc.substring(0, MAX_TEXT_LENGTH)}
+          {post.desc.length > MAX_TEXT_LENGTH ? "..." : ""}
+        </p>
         <p className="text-xs text-gray-500">{post.username}</p>
       </div>
       <div
@@ -18,7 +22,7 @@ const CollapsedPost = ({ post, isSelected, onSelectPost }) => {
         }`}
       >
         <p>{post.likes.length} likes</p>
-        <p>{post.comments.length} comments</p>
+        <p>{numComments} comments</p>
       </div>
     </div>
   );
