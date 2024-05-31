@@ -8,6 +8,7 @@ export const loginAuth = async (userInfo, dispatch) => {
       type: "LOGIN_SUCCESS",
       payload: res.data.userData,
     });
+    localStorage.setItem('user', JSON.stringify(res.data.userData))
     return res;
   } catch (error) {
     dispatch({
