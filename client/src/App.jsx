@@ -18,8 +18,13 @@ function App() {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
-      loginTokenAuth(foundUser, dispatch);
-      console.log(foundUser)
+      try {
+        loginTokenAuth(foundUser, dispatch);
+      } catch (error) {
+        localStorage.removeItem('user');
+        window.location.reload();
+      }
+    
     }
   }
   
