@@ -30,6 +30,7 @@ const userSchema = new Schema({
   },
   desc: {
     type: String,
+    default: "Looking to connect!",
   },
   from: {
     type: String,

@@ -134,3 +134,32 @@ export const getUserFriends = async (params) => {
     throw err;
   }
 };
+
+export const updateUserDesc = async (userId, desc) => {
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.desc = desc;
+    await user.save();
+
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateUserCityAndFrom = async (userId, city, from) => {
+  try {
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { city, from },
+      { new: true }
+    );
+    return user;
+  } catch (error) {
+    throw new Error("Error updating user city and from: " + error.message);
+  }
+};
