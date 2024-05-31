@@ -16,6 +16,8 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const { user: currentUser } = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
+  const [editDescMode, setEditDescMode] = useState(false);
+  const [newDesc, setNewDesc] = useState("");
   const [previewImage, setPreviewImage] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,6 +31,7 @@ const Profile = () => {
       try {
         const res = await getUserProfileData(username);
         setUser(res.data.userInfo);
+        setNewDesc(res.data.userInfo.desc || "");
       } catch (error) {
         console.log(error);
       }
@@ -101,10 +104,28 @@ const Profile = () => {
   const handleCancel = () => {
     setPreviewImage(null);
     setEditMode(false);
+    setEditDescMode(false);
   };
 
   const handleFilterChange = (category) => {
     setFilter(category);
+  };
+
+  const handleDescSave = async () => {
+    setLoading(true);
+    try {
+      const res = await API.put(`/users/${currentUser._id}/desc`, {
+        desc: newDesc,
+      });
+      toast.success(res.data.message);
+      setLoading(false);
+      setUser({ ...user, desc: newDesc });
+      setEditDescMode(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed to Update Description");
+      console.log(error);
+    }
   };
 
   return (
@@ -128,32 +149,47 @@ const Profile = () => {
             </div>
             <div className="flex flex-col items-center">
               <h1 className="font-bold text-2xl">{user.username}</h1>
-              <span>{user.desc || "Looking to make connections!"}</span>
-              {username === currentUser?.username && (
+              {editDescMode ? (
+                <div className="flex flex-col items-center">
+                  <textarea
+                    value={newDesc}
+                    onChange={(e) => setNewDesc(e.target.value)}
+                    className="mt-2.5 p-2 border rounded-md"
+                  />
+                  <div className="flex mt-2.5">
+                    <button
+                      onClick={handleDescSave}
+                      className="bg-green-600 px-5 py-2 text-white rounded-md hover:bg-green-700 transition"
+                    >
+                      {loading ? "Saving Changes" : "Save Changes"}
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      className="bg-red-500 ml-2 px-5 py-2 text-white rounded-md hover:bg-red-600 transition"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
                 <>
-                  {editMode ? (
+                  <span>{user.desc || "Looking to make connections!"}</span>
+                  {username === currentUser?.username && (
                     <>
-                      <button
-                        onClick={handleSave}
-                        className="bg-green-600 mt-2.5 px-5 py-2 text-white rounded-md hover:bg-green-700 transition"
-                      >
-                        {loading ? "Saving Changes" : "Save Changes"}
-                      </button>
-                      <button
-                        onClick={handleCancel}
-                        className="bg-red-500 mt-2.5 px-5 py-2 text-white rounded-md hover:bg-red-600 transition"
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <label
-                        htmlFor="profilePicture"
-                        className="text-white self-center cursor-pointer bg-green-600 mt-2.5 px-5 py-2 rounded-md hover:bg-green-700 transition"
-                      >
-                        Edit Profile
-                      </label>
+                      <div className="flex mt-2.5">
+                        <label
+                          htmlFor="profilePicture"
+                          className="text-white cursor-pointer bg-green-600 px-5 py-2 rounded-md hover:bg-green-700 transition"
+                        >
+                          Edit Profile Photo
+                        </label>
+                        <button
+                          onClick={() => setEditDescMode(true)}
+                          className="bg-blue-600 ml-2 px-5 py-2 text-white rounded-md hover:bg-blue-700 transition"
+                        >
+                          Edit Description
+                        </button>
+                      </div>
                       <input
                         type="file"
                         id="profilePicture"
@@ -163,6 +199,22 @@ const Profile = () => {
                     </>
                   )}
                 </>
+              )}
+              {editMode && (
+                <div className="flex mt-2.5">
+                  <button
+                    onClick={handleSave}
+                    className="bg-green-600 px-5 py-2 text-white rounded-md hover:bg-green-700 transition"
+                  >
+                    {loading ? "Saving Changes" : "Save Changes"}
+                  </button>
+                  <button
+                    onClick={handleCancel}
+                    className="bg-red-500 ml-2 px-5 py-2 text-white rounded-md hover:bg-red-600 transition"
+                  >
+                    Cancel
+                  </button>
+                </div>
               )}
             </div>
           </div>

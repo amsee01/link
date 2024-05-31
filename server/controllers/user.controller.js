@@ -7,6 +7,8 @@ import {
   unfollowUser,
   updateProfilePicture,
   updateUser,
+  updateUserDesc,
+  updateUserCityAndFrom,
 } from "../services/user.service.js";
 
 export const updateUserController = async (req, res) => {
@@ -27,20 +29,29 @@ export const updateUserController = async (req, res) => {
 };
 
 export const updateProfilePictureController = async (req, res) => {
-    try {
-      const user = await updateProfilePicture(req.params.id, req.file.path);
-      res.status(200).json({
-        user,
-        message: "Profile Picture has been updated Successfully",
-      });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
+  try {
+    const user = await updateProfilePicture(req.params.id, req.file.path);
+    res.status(200).json({
+      user,
+      message: "Profile Picture has been updated Successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 };
 
+export const updateUserDescController = async (req, res) => {
+  const { userId } = req.params;
+  const { desc } = req.body;
 
-
+  try {
+    const user = await updateUserDesc(userId, desc);
+    res.status(200).json({ message: "Description updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
 
 export const deleteUserController = async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -55,6 +66,24 @@ export const deleteUserController = async (req, res) => {
     }
   } else {
     res.status(500).json("you can only delete your account");
+  }
+};
+
+export const updateUserCityAndFromController = async (req, res) => {
+  const { id } = req.params;
+  const { city, from } = req.body;
+
+  try {
+    const user = await updateUserCityAndFrom(id, city, from);
+    res.status(200).json({
+      user,
+      message: "Location and Major have been updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error,
+    });
   }
 };
 

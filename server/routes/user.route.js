@@ -8,37 +8,44 @@ import {
   unfollowUserController,
   updateProfilePictureController,
   updateUserController,
+  updateUserDescController,
+  updateUserCityAndFromController,
 } from "../controllers/user.controller.js";
 import { parser } from "../config/cloudinary.js";
 
 const router = express.Router();
 
-//update USER
+// Update user description
+router.put("/:userId/desc", updateUserDescController);
+
+// Update USER
 router.put("/:id", updateUserController);
 
-//update profile Picture
+// Update profile Picture
 router.put(
   "/:id/profile-picture",
   parser.single("profilePicture"),
   updateProfilePictureController
 );
 
-//delete user
+// Delete user
 router.delete("/:id", deleteUserController);
 
-//get a user
+// Get a user
 router.get("/:id", getUserController);
 
-//get User Profile
+// Get User Profile
 router.get("/", getUserProfileController);
 
-//follow a user
+// Follow a user
 router.put("/follow/:id", followUserController);
 
-//unfollow User
+// Unfollow User
 router.put("/unfollow/:id", unfollowUserController);
 
-//getFriends
+// Get Friends
 router.get("/friends/:userId", getUserFriendsController);
+
+router.put("/:id/updateCityAndFrom", updateUserCityAndFromController);
 
 export default router;

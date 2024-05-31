@@ -14,7 +14,12 @@ const Navbar = ({ handleSearch }) => {
 
   const handleInputChange = (event) => {
     handleSearch(event.target.value);
-  }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
 
   return (
     <div className="h-[50px] w-full bg-blue-600 flex items-center sticky top-0">
@@ -37,14 +42,14 @@ const Navbar = ({ handleSearch }) => {
       </div>
       <div
         className="right flex items-center justify-around text-white"
-        style={{ flex:3 }}
+        style={{ flex: 3 }}
       >
         {/* <div className="tabLinks text-lg cursor-pointer flex gap-[10px] ">
           <span className="tabLink1 font-bold">Home</span>
           <span className="tablink2 font-bold">Timeline</span>
         </div> */}
         <div className="tabIcons flex text-xl gap-[10px]">
-          <div className="tabIcon1 cursor-pointer relative">
+          {/* <div className="tabIcon1 cursor-pointer relative">
             <IoPersonSharp className="text-2xl" />
             <span className="w-[15px] h-[15px] bg-red-500 rounded-full text-white absolute top-[-5px] right-[-5px] flex items-center justify-center text-sm">
               1
@@ -55,7 +60,7 @@ const Navbar = ({ handleSearch }) => {
             <span className="w-[15px] h-[15px] bg-red-500 rounded-full text-white absolute top-[-5px] right-[-5px] flex items-center justify-center text-sm">
               1
             </span>
-          </div>
+          </div> */}
           <div className="tabIcon1 cursor-pointer relative">
             <IoIosNotifications className="text-2xl" />
             <span className="w-[15px] h-[15px] bg-red-500 rounded-full text-white absolute top-[-5px] right-[-5px] flex items-center justify-center text-sm">
@@ -63,6 +68,12 @@ const Navbar = ({ handleSearch }) => {
             </span>
           </div>
         </div>
+        <button
+          className="text-white self-center cursor-pointer bg-gray-600 px-5 py-2 rounded-md hover:bg-red-700 transition"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
         <div className="profilePicDiv">
           <Link to={`/profile/${user?.username}`}>
             <img
