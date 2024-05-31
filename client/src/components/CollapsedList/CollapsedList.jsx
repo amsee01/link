@@ -53,7 +53,7 @@ const CollapsedList = ({
     <div className="collapsed-list-container" key={refreshPosts}>
       <div className="toolbar flex items-center justify-between mb-4">
         <div className="flex items-center">
-          Sort By:
+          <div>Sort By:</div>
           <button
             className={`sort-button ${
               sortCriteria === "createdAt" ? "active" : ""
