@@ -122,7 +122,7 @@ const Rightbar = ({ user }) => {
       <>
         {user.username !== currentUser?.username && (
           <button
-            className="bg-green-600 text-white mt-10 mb-5 py-2 px-5 rounded-md cursor-pointer hover:bg-green-700 transition"
+            className="bg-green-600 text-white mt-10 mb-5 py-2 px-5 rounded-md cursor-pointer hover:bg-green-700 transition ml-4"
             onClick={handleFollow}
           >
             {isFollowed ? "Following" : "Follow"}
@@ -148,7 +148,7 @@ const Rightbar = ({ user }) => {
           </div>
           <div className="mb-[10px]">
             <span className="font-semibold mr-[15px] text-slate-500">
-              Major:
+              Studying:
             </span>
             {editing ? (
               <input
@@ -162,21 +162,25 @@ const Rightbar = ({ user }) => {
               <span>{from}</span>
             )}
           </div>
-          {editing ? (
-            <button
-              className="bg-blue-600 text-white mt-5 py-2 px-5 rounded-md cursor-pointer hover:bg-blue-700 transition"
-              onClick={handleUserCityAndFromSave}
-              disabled={loading}
-            >
-              Save
-            </button>
-          ) : (
-            <button
-              className="bg-blue-600 text-white mt-5 py-2 px-5 rounded-md cursor-pointer hover:bg-blue-700 transition"
-              onClick={handleEdit}
-            >
-              Edit Info
-            </button>
+          {user.username === currentUser?.username && (
+            <>
+              {editing ? (
+                <button
+                  className="bg-blue-600 text-white mt-5 py-2 px-5 rounded-md cursor-pointer hover:bg-blue-700 transition"
+                  onClick={handleUserCityAndFromSave}
+                  disabled={loading}
+                >
+                  Save
+                </button>
+              ) : (
+                <button
+                  className="bg-blue-600 text-white mt-5 py-2 px-5 rounded-md cursor-pointer hover:bg-blue-700 transition"
+                  onClick={handleEdit}
+                >
+                  Edit Info
+                </button>
+              )}
+            </>
           )}
         </div>
       </>
