@@ -22,8 +22,11 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const user = await loginUser(req.body, res);
+    const loginObj = await loginUser(req.body, res);
+    const user = loginObj.user
     const { password, ...userData } = user._doc;
+    userData.token = loginObj.token
+    console.log(userData)
 
     res.status(200).json({
       message: "User logged In successfully",
