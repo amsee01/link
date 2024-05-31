@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Form } from "react-router-dom";
 
 export const API = axios.create({
   baseURL: "http://localhost:5001/api/v1",
@@ -34,14 +35,43 @@ export const uploadPost = async (userId, desc, img, type) => {
   return res.data;
 };
 
+<<<<<<< HEAD
 export const uploadComment = async (userId, userName, desc, postId) => {
+=======
+export const deletePost = async (userId, deletedPost) => {
+  const deleteForm = new FormData()
+  deleteForm.append("userId", userId);
+  deleteForm.append("post", JSON.stringify(deletedPost));
+
+  const res = await API.post(`/posts/delete-post`, deleteForm, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.data;
+};
+
+export const deleteComment = async (userId, deletedComment) => {
+  const deleteForm = new FormData()
+  deleteForm.append("userId", userId);
+  deleteForm.append("post", JSON.stringify(deletedComment));
+
+  const res = await API.post(`/comments/delete-comment`, deleteForm, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.data;
+}
+
+export const uploadComment = async(userId, userName, desc, postId) => {
+>>>>>>> d524b559636fe67f2382f6d74561b092d357a21f
   const commentForm = new FormData();
   commentForm.append("userId", userId);
   commentForm.append("userName", userName);
   commentForm.append("desc", desc);
   commentForm.append("postId", postId);
 
-  console.log("API RECEIVED:")
   for (var key of commentForm.entries()) {
     console.log(key[0] + ', ' + key[1]);
   }

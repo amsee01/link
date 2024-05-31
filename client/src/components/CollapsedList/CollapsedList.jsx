@@ -1,13 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import CollapsedPost from "../CollapsedPost/CollapsedPost";
+import { getPostComments } from "../../utils/api/api";
+import "./CollapsedList.css";
 
-const CollapsedList = ({ posts, onSelectPost, selectedPosts, refreshPosts }) => {
-  // Sort posts in reverse chronological order
-  const sortedPosts = [...posts].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
-  
+const CollapsedList = ({
+  posts,
+  onSelectPost,
+  selectedPosts,
+  refreshPosts,
+}) => {
+  const [sortCriteria, setSortCriteria] = useState("createdAt");
+  const [isReverse, setIsReverse] = useState(false);
+  const [commentCounts, setCommentCounts] = useState({});
+
+  const handleSortChange = (criteria) => {
+    if (sortCriteria === criteria) {
+      setIsReverse(!isReverse);
+    } else {
+      setSortCriteria(criteria);
+      setIsReverse(false);
+    }
+  };
+
+  const getComments = async (currentPosts) => {
+    let counts = {};
+    for (let i = 0; i < currentPosts.length; i++) {
+      const post = currentPosts[i];
+      const res = await getPostComments(post._id);
+      counts[post._id] = res.data.comments.length;
+    }
+    setCommentCounts(counts);
+  };
+
+  // load comment counts
+  useEffect(() => {
+    getComments(posts);
+  }, [posts]);
+
+  const sortedPosts = [...posts].sort((a, b) => {
+    let comparison = 0;
+    if (sortCriteria === "createdAt") {
+      comparison = new Date(b.createdAt) - new Date(a.createdAt);
+    } else if (sortCriteria === "likes") {
+      comparison = b.likes.length - a.likes.length;
+    } else if (sortCriteria === "comments") {
+      comparison = commentCounts[b._id] - commentCounts[a._id];
+    }
+    return isReverse ? -comparison : comparison;
+  });
+
   return (
-    <div className="collapsed-list" key={refreshPosts}>
+    <div className="collapsed-list-container" key={refreshPosts}>
+      <div className="toolbar flex items-center justify-between mb-4">
+        <div className="flex items-center">
+          <div>Sort By:</div>
+          <button
+            className={`sort-button ${
+              sortCriteria === "createdAt" ? "active" : ""
+            }`}
+            onClick={() => handleSortChange("createdAt")}
+          >
+            Date
+          </button>
+          <button
+            className={`sort-button ${
+              sortCriteria === "likes" ? "active" : ""
+            }`}
+            onClick={() => handleSortChange("likes")}
+          >
+            Likes
+          </button>
+          <button
+            className={`sort-button ${
+              sortCriteria === "comments" ? "active" : ""
+            }`}
+            onClick={() => handleSortChange("comments")}
+          >
+            Comments
+          </button>
+        </div>
+        <button
+          className="reverse-button"
+          onClick={() => setIsReverse(!isReverse)}
+        >
+          {isReverse ? "Ascending" : "Descending"}
+        </button>
+      </div>
       {sortedPosts.length === 0 ? (
         <p className="no-posts">No posts available for this category.</p>
       ) : (
@@ -15,28 +93,13 @@ const CollapsedList = ({ posts, onSelectPost, selectedPosts, refreshPosts }) => 
           const isSelected =
             selectedPosts && selectedPosts.some((p) => p._id === post._id);
           return (
-            <div
+            <CollapsedPost
               key={post._id}
-              className={`post-preview flex items-center p-2 border-b border-gray-200 hover:${
-                isSelected ? "bg-black" : "bg-gray-100"
-              } cursor-pointer ${isSelected ? "bg-blue-500 text-white" : ""}`}
-              onClick={() => onSelectPost(post)}
-            >
-              <div className="flex-grow">
-                <p className="font-bold text-sm">
-                  {post.desc.substring(0, 50)}...
-                </p>
-                <p className="text-xs text-gray-500">{post.username}</p>
-              </div>
-              <div
-                className={`text-xs flex flex-col items-end ${
-                  isSelected ? "text-gray-200" : "text-gray-500"
-                }`}
-              >
-                <p>{post.likes.length} likes</p>
-                <p>{post.comments.length} comments</p>
-              </div>
-            </div>
+              post={post}
+              isSelected={isSelected}
+              numComments={commentCounts[post._id]}
+              onSelectPost={onSelectPost}
+            />
           );
         })
       )}

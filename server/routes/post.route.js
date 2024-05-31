@@ -18,7 +18,7 @@ router.post("/create-post", parser.single("img"), createPostController);
 router.put("/update-post/:id", updatePostController);
 
 //delete post
-router.delete("/delete-post/:id", deletePostController);
+router.post("/delete-post", deletePostController);
 
 //like and dislike
 router.put("/like-post/:id", likeAndDislikeController);
