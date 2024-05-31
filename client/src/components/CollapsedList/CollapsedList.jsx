@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CollapsedPost from "../CollapsedPost/CollapsedPost";
 import { getPostComments } from "../../utils/api/api";
+import "./CollapsedList.css";
 
 const CollapsedList = ({
   posts,
@@ -52,6 +53,7 @@ const CollapsedList = ({
     <div className="collapsed-list-container" key={refreshPosts}>
       <div className="toolbar flex items-center justify-between mb-4">
         <div className="flex items-center">
+          Sort By:
           <button
             className={`sort-button ${
               sortCriteria === "createdAt" ? "active" : ""
