@@ -18,4 +18,16 @@ export const loginAuth = async (userInfo, dispatch) => {
   }
 };
 
+export const loginTokenAuth = async (savedState, dispatch) => {
+  try {
+    const res = await API.post("/auth/tokenlogin", savedState);
+    dispatch({
+      type: "LOGIN_SUCCESS",
+      payload: savedState,
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const registerUser = (data) => API.post("/auth/register", data);

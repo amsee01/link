@@ -23,7 +23,7 @@ export const loginUser = async (body) => {
   !passwordCheck && res.status(400).json("wrong password");
 
   const token = jwt.sign({ userId: user._id },  process.env.SIGNING_KEY, {
-    expiresIn: 120,
+    expiresIn: "2h",
   });
   
   let returnObj = {
@@ -33,3 +33,17 @@ export const loginUser = async (body) => {
   
   return returnObj;
 };
+
+export const loginToken = async (body) => {
+  console.log(body)
+  let token = body.token
+  let requestingUser = body._id
+  const decoded = jwt.verify(token, process.env.SIGNING_KEY);
+  console.log(decoded.userId)
+  console.log(requestingUser)
+  if (decoded.userId == requestingUser) {
+    return requestingUser
+  } else {
+    throw new Error("Mismatch in users")
+  }
+}
