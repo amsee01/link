@@ -36,6 +36,11 @@ export const uploadPost = async (userId, desc, img, type) => {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+export const uploadComment = async (userId, userName, desc, postId) => {
+=======
+>>>>>>> c842af441622e74666fd21e3498cff454b3bd6ad
 export const deletePost = async (userId, deletedPost) => {
   const deleteForm = new FormData()
   deleteForm.append("userId", userId);
@@ -63,9 +68,13 @@ export const deleteComment = async (userId, deletedComment) => {
 }
 
 export const uploadComment = async(userId, userName, desc, postId) => {
+<<<<<<< HEAD
 =======
 export const uploadComment = async (userId, userName, desc, postId) => {
 >>>>>>> 52946da (Changed server port.)
+=======
+>>>>>>> d524b559636fe67f2382f6d74561b092d357a21f
+>>>>>>> c842af441622e74666fd21e3498cff454b3bd6ad
   const commentForm = new FormData();
   commentForm.append("userId", userId);
   commentForm.append("userName", userName);
