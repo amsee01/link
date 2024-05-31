@@ -8,6 +8,7 @@ export const loginAuth = async (userInfo, dispatch) => {
       type: "LOGIN_SUCCESS",
       payload: res.data.userData,
     });
+    localStorage.setItem('user', JSON.stringify(res.data.userData))
     return res;
   } catch (error) {
     dispatch({
@@ -16,5 +17,17 @@ export const loginAuth = async (userInfo, dispatch) => {
     });
   }
 };
+
+export const loginTokenAuth = async (savedState, dispatch) => {
+  try {
+    const res = await API.post("/auth/tokenlogin", savedState);
+    dispatch({
+      type: "LOGIN_SUCCESS",
+      payload: savedState,
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const registerUser = (data) => API.post("/auth/register", data);

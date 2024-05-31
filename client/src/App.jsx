@@ -8,9 +8,27 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { loginTokenAuth } from "./utils/api/auth.api";
+
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+
+  if (user == null) {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      try {
+        loginTokenAuth(foundUser, dispatch);
+      } catch (error) {
+        localStorage.removeItem('user');
+        window.location.reload();
+      }
+    
+    }
+  }
+  
+  
   return (
     <>
       <ToastContainer />
