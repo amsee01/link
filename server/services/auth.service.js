@@ -1,5 +1,6 @@
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 
 export const registerUser = async (body) => {
   const hashedPassword = bcrypt.hashSync(body.password, 10);
@@ -21,5 +22,26 @@ export const loginUser = async (body) => {
   const passwordCheck = await bcrypt.compare(body.password, user.password);
   !passwordCheck && res.status(400).json("wrong password");
 
-  return user;
+  const token = jwt.sign({ userId: user._id },  process.env.SIGNING_KEY, {
+    expiresIn: "12h",
+  });
+  
+  let returnObj = {
+    user: user,
+    token: token
+  }
+  
+  return returnObj;
 };
+
+export const loginToken = async (body) => {
+  console.log(body)
+  let token = body.token
+  let requestingUser = body._id
+  const decoded = jwt.verify(token, process.env.SIGNING_KEY);
+  if (decoded.userId == requestingUser) {
+    return requestingUser
+  } else {
+    throw new Error("Mismatch in users")
+  }
+}

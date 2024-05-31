@@ -15,11 +15,12 @@ const Navbar = ({ handleSearch }) => {
   const handleInputChange = (event) => {
     handleSearch(event.target.value);
   };
-
+  
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
     window.location.reload();
   };
+
 
   return (
     <div className="h-[50px] w-full bg-blue-600 flex items-center sticky top-0">
@@ -68,10 +69,7 @@ const Navbar = ({ handleSearch }) => {
             </span>
           </div>
         </div>
-        <button
-          className="text-white self-center cursor-pointer bg-gray-600 px-5 py-2 rounded-md hover:bg-red-700 transition"
-          onClick={handleLogout}
-        >
+        <button className="text-white self-center cursor-pointer bg-gray-600 px-5 py-2 rounded-md hover:bg-red-700 transition" onClick={handleLogout}>
           Logout
         </button>
         <div className="profilePicDiv">
