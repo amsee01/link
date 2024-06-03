@@ -3,25 +3,25 @@ import {
   deleteComment,
   getComments,
 } from "../services/comment.service.js";
-import Post from "../models/post.model.js"; // Make sure to import the Post model
+// import Post from "../models/post.model.js";
 
 export const createCommentController = async (req, res) => {
   try {
     const newComment = await createComment(req.body);
 
-    // Get the post to find the post owner
-    const post = await Post.findById(req.body.postId);
-    const postOwnerId = post.userId; // Assuming post has a userId field
+    // // Get the post to find the post owner
+    // const post = await Post.findById(req.body.postId);
+    // const postOwnerId = post.userId; // Assuming post has a userId field
 
-    // Create a notification for the post owner
-    const notification = new Notification({
-      userId: postOwnerId,
-      type: "comment",
-      postId: newComment.postId,
-      commentId: newComment._id,
-      senderName: req.body.userName, // Assuming userName is passed in req.body
-    });
-    await notification.save();
+    // // Create a notification for the post owner
+    // const notification = new Notification({
+    //   userId: postOwnerId,
+    //   type: "comment",
+    //   postId: newComment.postId,
+    //   commentId: newComment._id,
+    //   senderName: req.body.userName, // Assuming userName is passed in req.body
+    // });
+    // await notification.save();
 
     res.status(200).json({
       newComment,

@@ -96,6 +96,7 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
   const handleLike = async () => {
     try {
       await likeAndDislikePost(post._id, currentUser._id);
+      toast.success("Post like or dislike action has been completed!");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
