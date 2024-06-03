@@ -48,11 +48,34 @@ const Home = () => {
     setFilter(category);
   };
 
-  const handleToggleSelectPost = (post) => {
-    if (selectedPosts.some((p) => p._id === post._id)) {
-      setSelectedPosts(selectedPosts.filter((p) => p._id != post._id));
+  const handleToggleSelectPost = (postList, multi = false, select = true) => {
+    if (!multi) {
+      // Handle toggling of selecting one post
+      if (selectedPosts.some((p) => p._id === postList[0]._id)) {
+        setSelectedPosts(
+          selectedPosts.filter((p) => p._id !== postList[0]._id)
+        );
+      } else {
+        setSelectedPosts([...selectedPosts, postList[0]]);
+      }
     } else {
-      setSelectedPosts([...selectedPosts, post]);
+      // Handle toggling "select all"
+      let newSelectedPosts = [];
+      if (select) {
+        // Select posts that are not already in selectedPosts
+        const selectedIds = new Set(selectedPosts.map((p) => p._id));
+        newSelectedPosts = [
+          ...selectedPosts,
+          ...postList.filter((p) => !selectedIds.has(p._id)),
+        ];
+      } else {
+        // Unselect posts that are in selectedPosts
+        const postIdsToUnselect = new Set(postList.map((p) => p._id));
+        newSelectedPosts = selectedPosts.filter(
+          (p) => !postIdsToUnselect.has(p._id)
+        );
+      }
+      setSelectedPosts(newSelectedPosts);
     }
   };
 

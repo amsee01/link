@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import CollapsedPost from "../CollapsedPost/CollapsedPost";
 import { getPostComments } from "../../utils/api/api";
+import {
+  FaSortAmountDown,
+  FaSortAmountUp,
+  FaCheckSquare,
+  FaSquare,
+} from "react-icons/fa";
 import "./CollapsedList.css";
 
 const CollapsedList = ({
@@ -13,7 +19,8 @@ const CollapsedList = ({
   const [isReverse, setIsReverse] = useState(false);
   const [commentCounts, setCommentCounts] = useState({});
 
-  const handleSortChange = (criteria) => {
+  const handleSortChange = (e) => {
+    const criteria = e.target.value;
     if (sortCriteria === criteria) {
       setIsReverse(!isReverse);
     } else {
@@ -49,42 +56,45 @@ const CollapsedList = ({
     return isReverse ? -comparison : comparison;
   });
 
+  const allSelected =
+    sortedPosts.length > 0 &&
+    sortedPosts.every((post) => selectedPosts.some((p) => p._id === post._id));
+
+  const handleSelectAll = () => {
+    if (allSelected) {
+      onSelectPost(sortedPosts, true, false);
+    } else {
+      onSelectPost(sortedPosts, true);
+    }
+  };
+
   return (
     <div className="collapsed-list-container" key={refreshPosts}>
       <div className="toolbar flex items-center justify-between mb-4">
         <div className="flex items-center">
-          <div>Sort By:</div>
-          <button
-            className={`sort-button ${
-              sortCriteria === "createdAt" ? "active" : ""
-            }`}
-            onClick={() => handleSortChange("createdAt")}
+          <label htmlFor="sortCriteria">Sort By:</label>
+          <select
+            id="sortCriteria"
+            value={sortCriteria}
+            onChange={handleSortChange}
+            className="sort-select"
           >
-            Date
+            <option value="createdAt">Date</option>
+            <option value="likes">Likes</option>
+            <option value="comments">Comments</option>
+          </select>
+        </div>
+        <div className="flex items-center">
+          <button
+            className="reverse-button"
+            onClick={() => setIsReverse(!isReverse)}
+          >
+            {isReverse ? <FaSortAmountUp /> : <FaSortAmountDown />}
           </button>
-          <button
-            className={`sort-button ${
-              sortCriteria === "likes" ? "active" : ""
-            }`}
-            onClick={() => handleSortChange("likes")}
-          >
-            Likes
-          </button>
-          <button
-            className={`sort-button ${
-              sortCriteria === "comments" ? "active" : ""
-            }`}
-            onClick={() => handleSortChange("comments")}
-          >
-            Comments
+          <button className="select-all-button" onClick={handleSelectAll}>
+            {allSelected ? <FaCheckSquare /> : <FaSquare />} Select All
           </button>
         </div>
-        <button
-          className="reverse-button"
-          onClick={() => setIsReverse(!isReverse)}
-        >
-          {isReverse ? "Ascending" : "Descending"}
-        </button>
       </div>
       {sortedPosts.length === 0 ? (
         <p className="no-posts">No posts available for this category.</p>

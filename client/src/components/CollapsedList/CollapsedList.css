@@ -5,23 +5,19 @@
   margin-bottom: 1rem;
 }
 
-.sort-button {
-  margin-right: 1rem;
-  padding: 0.5rem 1rem;
+.sort-select {
+  margin-left: 1rem;
+  padding: 0.5rem;
   border: none;
   background-color: #f0f0f0;
-  cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
-.sort-button.active,
-.sort-button:hover {
-  background-color: #e0e0e0;
-}
-
-.reverse-button {
-  padding: 0.5rem 1rem;
+.reverse-button,
+.select-all-button {
+  margin-left: 1rem;
+  padding: 0.5rem;
   border: none;
   background-color: #2663eb;
   color: white;
@@ -30,7 +26,8 @@
   transition: background-color 0.3s ease;
 }
 
-.reverse-button:hover {
+.reverse-button:hover,
+.select-all-button:hover {
   background-color: #1a4ea1;
 }
 

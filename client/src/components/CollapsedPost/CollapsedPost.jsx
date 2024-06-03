@@ -7,7 +7,7 @@ const CollapsedPost = ({ post, isSelected, numComments, onSelectPost }) => {
       className={`post-preview flex items-center p-2 border-b border-gray-200 hover:${
         isSelected ? "bg-black" : "bg-gray-100"
       } cursor-pointer ${isSelected ? "bg-blue-500 text-white" : ""}`}
-      onClick={() => onSelectPost(post)}
+      onClick={() => onSelectPost([post])}
     >
       <div className="flex-grow">
         <p className="font-bold text-sm">
