@@ -83,18 +83,21 @@ const CollapsedList = ({
             <option value="likes">Likes</option>
             <option value="comments">Comments</option>
           </select>
-        </div>
-        <div className="flex items-center">
           <button
             className="reverse-button"
             onClick={() => setIsReverse(!isReverse)}
           >
             {isReverse ? <FaSortAmountUp /> : <FaSortAmountDown />}
           </button>
-          <button className="select-all-button" onClick={handleSelectAll}>
-            {allSelected ? <FaCheckSquare /> : <FaSquare />} Select All
-          </button>
         </div>
+        <button className="select-all-button" onClick={handleSelectAll}>
+          {allSelected ? (
+            <FaCheckSquare className="checked-icon" />
+          ) : (
+            <FaSquare className="unchecked-icon" />
+          )}
+          Select All
+        </button>
       </div>
       {sortedPosts.length === 0 ? (
         <p className="no-posts">No posts available for this category.</p>
