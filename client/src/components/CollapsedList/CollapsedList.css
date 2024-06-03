@@ -5,33 +5,49 @@
   margin-bottom: 1rem;
 }
 
-.sort-button {
-  margin-right: 1rem;
-  padding: 0.5rem 1rem;
+.sort-select {
+  margin-left: 1rem;
+  padding: 0.5rem;
   border: none;
   background-color: #f0f0f0;
-  cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-}
-
-.sort-button.active,
-.sort-button:hover {
-  background-color: #e0e0e0;
 }
 
 .reverse-button {
-  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  padding: 0.5rem;
   border: none;
-  background-color: #2663eb;
-  color: white;
+  background-color: transparent;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .reverse-button:hover {
-  background-color: #1a4ea1;
+  color: #1a4ea1;
+}
+
+.select-all-button {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  padding: 0.5rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.select-all-button:hover {
+  color: #1a4ea1;
+}
+
+.checked-icon {
+  color: #2663eb;
+}
+
+.unchecked-icon {
+  color: #888;
 }
 
 .no-posts {
