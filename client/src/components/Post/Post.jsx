@@ -127,7 +127,10 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
             {matchUser && (
               <MdOutlineDelete
                 className="text-xl cursor-pointer"
-                onClick={onDelete}
+                onClick={() => {
+                  onDelete();
+                  if (onClose) onClose();
+                }}
               />
             )}
             {onClose && (

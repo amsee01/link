@@ -51,12 +51,14 @@ const Home = () => {
   const handleToggleSelectPost = (postList, multi = false, select = true) => {
     if (!multi) {
       // Handle toggling of selecting one post
-      if (selectedPosts.some((p) => p._id === postList[0]._id)) {
-        setSelectedPosts(
-          selectedPosts.filter((p) => p._id !== postList[0]._id)
-        );
-      } else {
-        setSelectedPosts([...selectedPosts, postList[0]]);
+      if (postList.length > 0) {
+        if (selectedPosts.some((p) => p._id === postList[0]._id)) {
+          setSelectedPosts(
+            selectedPosts.filter((p) => p._id !== postList[0]._id)
+          );
+        } else {
+          setSelectedPosts([...selectedPosts, postList[0]]);
+        }
       }
     } else {
       // Handle toggling "select all"
