@@ -7,7 +7,7 @@ import {
   likeAndDislike,
   updatePost,
 } from "../services/post.service.js";
-import Post from "../models/post.model.js";
+// import Post from "../models/post.model.js";
 
 export const createPostController = async (req, res) => {
   try {
@@ -61,19 +61,20 @@ export const likeAndDislikeController = async (req, res) => {
   try {
     const post = await likeAndDislike(req.params, req.body);
 
-    const postOwnerId = post.userId; // Assuming post has a userId field
-    const userId = req.body.userId; // Get the userId from request body
-    const isLiked = !post.likes.includes(userId);
+    // const postOwnerId = post.userId; // Assuming post has a userId field
+    // const userId = req.body.userId; // Get the userId from request body
+    // const isLiked = !post.likes.includes(userId);
 
-    if (isLiked) {
-      const notification = new Notification({
-        userId: postOwnerId,
-        type: "like",
-        postId: post._id,
-        senderName: req.body.userName, // Assuming userName is passed in req.body
-      });
-      await notification.save();
-    }
+    // if (isLiked) {
+    //   const notification = new Notification({
+    //     userId: postOwnerId,
+    //     type: "like",
+    //     postId: post._id,
+    //     senderName: req.body.userName, // Assuming userName is passed in req.body
+    //   });
+    //   await notification.save();
+    // }
+    console.log("liked");
 
     res.status(200).json({
       post,
