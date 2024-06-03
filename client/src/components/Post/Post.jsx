@@ -38,6 +38,7 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
   const { user: currentUser } = useContext(AuthContext);
   const [desc, setDesc] = useState("");
   const [matchUser, setMatchUser] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
@@ -103,8 +104,14 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
     setIsLiked(!isLiked);
   };
 
+  const confirmDelete = () => {
+    setShowDeleteModal(false);
+    onDelete();
+    if (onClose) onClose();
+  };
+
   return (
-    <div className="w-full rounded-md shadow-lg mt-[0px] mb-[30px] p-[10px]">
+    <div className="w-full rounded-md shadow-lg mt-[0px] mb-[30px] p-[10px] relative">
       <div className="p-[10px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -127,7 +134,7 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
             {matchUser && (
               <MdOutlineDelete
                 className="text-xl cursor-pointer"
-                onClick={onDelete}
+                onClick={() => setShowDeleteModal(true)}
               />
             )}
             {onClose && (
@@ -218,6 +225,25 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
           })
         )}
       </div>
+
+      {showDeleteModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Are you sure you want to delete this post?</p>
+            <div className="modal-actions">
+              <button
+                className="cancel-button"
+                onClick={() => setShowDeleteModal(false)}
+              >
+                Cancel
+              </button>
+              <button className="delete-button" onClick={confirmDelete}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
