@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { registerUser } from "../../utils/api/auth.api";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,10 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
+
+  useEffect(() => {
+    document.body.classList.add("no-scroll")
+  })
 
   const navigate = useNavigate();
   const handleRegister = async (e) => {
@@ -39,7 +43,11 @@ const Register = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-blue-100 flex items-center justify-center">
+    <div className="w-screen h-screen bg-blue-100 flex items-center justify-center" style={{
+      position: 'absolute', left: '50%', top: '50%',
+      transform: 'translate(-50%, -50%)',
+      padding: "10%"
+    }}>
       <div className="w-[70%] h-[70%] flex">
         <div className="flex flex-col justify-center" style={{ flex: 1 }}>
           <h1 className="font-extrabold text-3xl text-green-600">Link 🔗</h1>

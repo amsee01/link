@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Profile from "./pages/Profile/Profile";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,6 +27,10 @@ function App() {
     
     }
   }
+
+  useEffect(()=>{
+    document.body.style.zoom = "125%";
+  })
   
   
   return (
