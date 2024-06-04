@@ -35,6 +35,16 @@ const Home = () => {
           )
         );
       }
+
+      // Set the norms post as selected by default.
+    if (selectedPosts.length == 0) {
+      let myPosts = res.data.posts
+      for (let i = 0; i < myPosts.length; i++) {
+        if (myPosts[i]._id == "665c95b7a533f30c4328c60f"){
+          setSelectedPosts([myPosts[i]])
+        }
+      }
+    }
     } catch (error) {
       console.log(error);
     }
