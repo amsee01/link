@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { loginAuth } from "../../utils/api/auth.api";
 import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   const [auth, setAuth] = useState({
@@ -18,6 +20,13 @@ const Login = () => {
     e.preventDefault();
     loginAuth({ email: auth.email, password: auth.password }, dispatch);
   };
+
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `/`; 
+    navigate(path);
+  }
+
   return (
     <div className="w-screen h-screen bg-blue-100 flex items-center justify-center" style={{
       position: 'absolute', left: '50%', top: '50%',
@@ -35,7 +44,7 @@ const Login = () => {
         </div>
         <div className="flex flex-col justify-center" style={{ flex: 1 }}>
           <form onSubmit={handleLogin}>
-            <div className="bg-white h-[300px] p-[20px] rounded-md flex flex-col justify-between shadow-lg">
+            <div className="bg-white h-[250px] p-[20px] rounded-md flex flex-col justify-between shadow-lg">
               <input
                 type="email"
                 placeholder="Email"
@@ -64,12 +73,9 @@ const Login = () => {
               <button className="h-[50px] rounded-lg bg-green-600 hover:bg-green-700 transition text-white text-lg font-bold">
                 {isFetching ? "Logging In" : "Login"}
               </button>
-              <span className="text-center text-green-600 cursor-pointer">
-                forgot password?
+              <span className="text-center text-blue-600 cursor-pointer" onClick={routeChange}>
+              Create an account
               </span>
-              <button className="h-[50px] rounded-lg bg-blue-600 hover:bg-purple-700 transition text-white text-lg font-bold" style={{"marginTop": "5px"}}>
-                Create A New Account
-              </button>
             </div>
           </form>
         </div>
