@@ -24,6 +24,7 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState(ALL);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [refreshPosts, setRefreshPosts] = useState(0);
 
   // get user profile info
   useEffect(() => {
@@ -50,7 +51,7 @@ const Profile = () => {
       }
     };
     userPosts();
-  }, [username]);
+  }, [username, refreshPosts]);
 
   // filter user posts
   useEffect(() => {
@@ -126,6 +127,10 @@ const Profile = () => {
       toast.error("Failed to Update Description");
       console.log(error);
     }
+  };
+
+  const handleRefreshPosts = () => {
+    setRefreshPosts(refreshPosts + 1);
   };
 
   return (
@@ -219,7 +224,11 @@ const Profile = () => {
             </div>
           </div>
           <div className="flex">
-            <NewsFeed posts={filteredPosts} sorted />
+            <NewsFeed
+              posts={filteredPosts}
+              sorted
+              removePost={(post) => handleRefreshPosts()}
+            />
             <Rightbar user={user} />
           </div>
         </div>
