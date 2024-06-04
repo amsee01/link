@@ -22,6 +22,10 @@ const postSchema = new Schema(
       type: [commentSchema],
       default: [],
     },
+    pinned: {
+      type: Boolean,
+      default: false
+    },
     type: {
       type: String,
       required: true,
