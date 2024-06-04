@@ -46,7 +46,9 @@ const CollapsedList = ({
 
   const sortedPosts = [...posts].sort((a, b) => {
     let comparison = 0;
-    if (sortCriteria === "createdAt") {
+    if ((a.pinned && !b.pinned) || (b.pinned && !a.pinned)) {
+      comparison = a.pinned ? -1 : 1;
+    } else if (sortCriteria === "createdAt") {
       comparison = new Date(b.createdAt) - new Date(a.createdAt);
     } else if (sortCriteria === "likes") {
       comparison = b.likes.length - a.likes.length;
