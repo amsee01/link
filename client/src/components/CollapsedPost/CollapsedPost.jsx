@@ -1,4 +1,5 @@
 import React from "react";
+import { BsFillPinAngleFill } from "react-icons/bs";
 
 const CollapsedPost = ({ post, isSelected, numComments, onSelectPost }) => {
   const MAX_TEXT_LENGTH = 50;
@@ -9,8 +10,10 @@ const CollapsedPost = ({ post, isSelected, numComments, onSelectPost }) => {
       } cursor-pointer ${isSelected ? "bg-blue-500 text-white" : ""}`}
       onClick={() => onSelectPost([post])}
     >
-      <div className="flex-grow">
+       {post.pinned && ( <BsFillPinAngleFill />)}
+      <div className="flex-grow" style={{paddingLeft:"5pt"}}>
         <p className="font-bold text-sm">
+          
           {post.desc.substring(0, MAX_TEXT_LENGTH)}
           {post.desc.length > MAX_TEXT_LENGTH ? "..." : ""}
         </p>
