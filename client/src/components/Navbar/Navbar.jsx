@@ -23,7 +23,7 @@ const Navbar = ({ handleSearch }) => {
 
 
   return (
-    <div className="h-[50px] w-full bg-blue-600 flex items-center sticky top-0">
+    <div className="h-[50px] w-full bg-blue-600 flex items-center sticky top-0" style={{zIndex : 999}}>
       <div className="left bg-red" style={{ flex: 3 }}>
         <Link to={"/"}>
           <div className="logodiv cursor-pointer">
