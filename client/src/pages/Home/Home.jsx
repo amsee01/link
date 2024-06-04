@@ -130,6 +130,7 @@ const Home = () => {
               removePost={handleToggleSelectPost}
               refreshCollapsed={handleRefresh}
               reversed={true}
+              onLikePost={handleRefresh}
             />
           )}
         </div>

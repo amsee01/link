@@ -228,6 +228,7 @@ const Profile = () => {
               posts={filteredPosts}
               sorted
               removePost={(post) => handleRefreshPosts()}
+              onLikePost={handleRefreshPosts}
             />
             <Rightbar user={user} />
           </div>

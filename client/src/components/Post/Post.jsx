@@ -30,7 +30,14 @@ function setNativeValue(element, value) {
   element.dispatchEvent(event);
 }
 
-const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
+const Post = ({
+  post,
+  onClose,
+  comments,
+  refreshComments,
+  onDelete,
+  onLike,
+}) => {
   const [like, setLike] = useState(post.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
@@ -49,18 +56,18 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
     userId: "NaN",
     userName: "Moderator Team",
     _v: 0,
-    _id: "modComment"
+    _id: "modComment",
+  };
+
+  console.log(post);
+
+  if (
+    (comments.length == 0 || comments[0]._id != "modComment") &&
+    post.pinned == false
+  ) {
+    comments.unshift(pinnedComment);
   }
 
-  console.log(post)
-
-  if ((comments.length == 0 || comments[0]._id != "modComment") && post.pinned == false) {
-    comments.unshift(
-      pinnedComment
-    )
-  }
-  
- 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
     setLike(post.likes?.length);
@@ -124,6 +131,7 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
     }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
+    if (onLike) onLike();
   };
 
   const confirmDelete = () => {

@@ -11,6 +11,7 @@ const NewsFeed = ({
   sorted,
   removePost,
   refreshCollapsed,
+  onLikePost,
 }) => {
   const [orderedPosts, setOrderedPosts] = useState([]);
   const [postComments, setPostComments] = useState({});
@@ -84,6 +85,7 @@ const NewsFeed = ({
               refreshComments={handleRefresh}
               comments={post._id in postComments ? postComments[post._id] : []}
               onDelete={() => handleDeletePost(post)}
+              onLike={onLikePost}
             />
           </div>
         ))}
