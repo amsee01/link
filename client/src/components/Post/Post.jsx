@@ -40,6 +40,27 @@ const Post = ({ post, onClose, comments, refreshComments, onDelete }) => {
   const [matchUser, setMatchUser] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  // Create pinned comment object
+  let pinnedComment = {
+    createdAt: "2024-05-31T19:09:14.164Z",
+    desc: "Hello! Thank you for your post. Please ensure that your post meets our norms (see the pinned post) - our dedicated moderators swiftly remove any violating posts. Thank you for keeping Link safe!",
+    postId: "NA",
+    updatedAt: "2024-05-31T19:09:14.164Z",
+    userId: "NaN",
+    userName: "Moderator Team",
+    _v: 0,
+    _id: "modComment"
+  }
+
+  console.log(post)
+
+  if ((comments.length == 0 || comments[0]._id != "modComment") && post.pinned == false) {
+    comments.unshift(
+      pinnedComment
+    )
+  }
+  
+ 
   useEffect(() => {
     setIsLiked(post.likes?.includes(currentUser._id));
     setLike(post.likes?.length);
