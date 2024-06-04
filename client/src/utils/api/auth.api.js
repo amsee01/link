@@ -1,4 +1,5 @@
 import { API } from "./api";
+import { toast } from "react-toastify"
 
 export const loginAuth = async (userInfo, dispatch) => {
   dispatch({ type: "LOGIN START" });
@@ -15,6 +16,7 @@ export const loginAuth = async (userInfo, dispatch) => {
       type: "LOGIN_FAILURE",
       payload: error,
     });
+    toast.error("Login failed - please check your credentials.")
   }
 };
 

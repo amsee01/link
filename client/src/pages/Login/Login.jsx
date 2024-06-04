@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { loginAuth } from "../../utils/api/auth.api";
+import { toast } from "react-toastify"
 
 const Login = () => {
   const [auth, setAuth] = useState({
