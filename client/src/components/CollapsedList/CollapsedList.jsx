@@ -66,7 +66,7 @@ const CollapsedList = ({
     if (allSelected) {
       onSelectPost(sortedPosts, true, false);
     } else {
-      onSelectPost(sortedPosts, true);
+      onSelectPost(sortedPosts.reverse(), true);
     }
   };
 
