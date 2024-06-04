@@ -2,28 +2,36 @@ import React, { useContext, useEffect, useState } from "react";
 import Post from "../Post/Post";
 import { AuthContext } from "../../context/AuthContext";
 import { getPostComments, deletePost } from "../../utils/api/api";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
-const NewsFeed = ({ posts, reversed, setPosts, sorted, removePost, refreshCollapsed }) => {
+const NewsFeed = ({
+  posts,
+  reversed,
+  setPosts,
+  sorted,
+  removePost,
+  refreshCollapsed,
+  onLikePost,
+}) => {
   const [orderedPosts, setOrderedPosts] = useState([]);
   const [postComments, setPostComments] = useState({});
-  const [commentRefresh, setCommentRefresh] = useState(0)
+  const [commentRefresh, setCommentRefresh] = useState(0);
   const { user } = useContext(AuthContext);
 
-  const getComments = async ( currentPosts ) => {
+  const getComments = async (currentPosts) => {
     let iter = 0;
-    let commentObject = {}
+    let commentObject = {};
     while (iter < currentPosts.length) {
-      let currPost = currentPosts[iter]
-      const res = await getPostComments(currPost._id)
-      commentObject[currPost._id] = res.data.comments
-      iter++
+      let currPost = currentPosts[iter];
+      const res = await getPostComments(currPost._id);
+      commentObject[currPost._id] = res.data.comments;
+      iter++;
     }
 
-    setPostComments(commentObject)
-  }
+    setPostComments(commentObject);
+  };
 
-  useEffect( () => {
+  useEffect(() => {
     let newOrderedPosts = posts;
 
     if (sorted) {
@@ -38,7 +46,6 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted, removePost, refreshCollap
 
     setOrderedPosts(newOrderedPosts);
     getComments(newOrderedPosts);
-
   }, [posts, reversed, sorted]);
 
   const handleClosePost = (postId) => {
@@ -49,21 +56,22 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted, removePost, refreshCollap
   };
 
   const handleDeletePost = async (post) => {
-    await removePost(post)
-    const res = await deletePost(user._id, post)
+    console.log("deleting this post");
+    if (removePost) await removePost(post);
+    const res = await deletePost(user._id, post);
     if (res.message.includes("Success")) {
       toast.success("Post has been deleted successfully!");
     } else {
       toast.error("Something went wrong.");
     }
-    await refreshCollapsed();
-  }
+    if (refreshCollapsed) await refreshCollapsed();
+  };
 
   const handleRefresh = async () => {
-    await getComments(orderedPosts)
+    await getComments(orderedPosts);
     await setCommentRefresh(Math.random());
-    console.log("I did a refresh!")
-  }
+    console.log("I did a refresh!");
+  };
 
   return (
     <div style={{ flex: 8 }} className="p-[10px]" key={commentRefresh}>
@@ -74,11 +82,10 @@ const NewsFeed = ({ posts, reversed, setPosts, sorted, removePost, refreshCollap
               key={post._id}
               onClose={setPosts ? () => handleClosePost(post._id) : null}
               post={post}
-              refreshComments = {handleRefresh}
-              comments={ 
-                post._id in postComments ? postComments[post._id] : []
-              }
-              onDelete={setPosts ? () => handleDeletePost(post) : null}
+              refreshComments={handleRefresh}
+              comments={post._id in postComments ? postComments[post._id] : []}
+              onDelete={() => handleDeletePost(post)}
+              onLike={onLikePost}
             />
           </div>
         ))}

@@ -37,14 +37,14 @@ const Home = () => {
       }
 
       // Set the norms post as selected by default.
-    if (selectedPosts.length == 0) {
-      let myPosts = res.data.posts
-      for (let i = 0; i < myPosts.length; i++) {
-        if (myPosts[i]._id == "665c95b7a533f30c4328c60f"){
-          setSelectedPosts([myPosts[i]])
+      if (selectedPosts.length == 0) {
+        let myPosts = res.data.posts;
+        for (let i = 0; i < myPosts.length; i++) {
+          if (myPosts[i]._id == "665c95b7a533f30c4328c60f") {
+            setSelectedPosts([myPosts[i]]);
+          }
         }
       }
-    }
     } catch (error) {
       console.log(error);
     }
@@ -103,7 +103,10 @@ const Home = () => {
     <>
       <Navbar handleSearch={handleRefresh} />
       <div className="flex">
-        <Sidebar onFilterChange={handleFilterChange} />
+        <Sidebar
+          onFilterChange={handleFilterChange}
+          minimize={selectedPosts.length > 0}
+        />
         <div className="flex-grow p-4">
           <UploadPost refreshFn={handleRefresh} />
           <CollapsedList
@@ -127,6 +130,7 @@ const Home = () => {
               removePost={handleToggleSelectPost}
               refreshCollapsed={handleRefresh}
               reversed={true}
+              onLikePost={handleRefresh}
             />
           )}
         </div>

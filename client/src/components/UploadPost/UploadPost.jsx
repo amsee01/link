@@ -4,8 +4,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import userPic from "../Post/assets/user.png";
 import { POST_TYPES } from "../../constants/constants";
-import "./UploadPost.css"
-import TextareaAutosize from 'react-textarea-autosize';
+import "./UploadPost.css";
+import TextareaAutosize from "react-textarea-autosize";
 
 function setNativeValue(element, value) {
   let lastValue = element.value;
@@ -16,13 +16,12 @@ function setNativeValue(element, value) {
   // React 16
   let tracker = element._valueTracker;
   if (tracker) {
-      tracker.setValue(lastValue);
+    tracker.setValue(lastValue);
   }
   element.dispatchEvent(event);
 }
 
-
-const UploadPost = ({refreshFn}) => {
+const UploadPost = ({ refreshFn }) => {
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -31,11 +30,15 @@ const UploadPost = ({refreshFn}) => {
   const { user } = useContext(AuthContext);
 
   const handlePostUpload = async () => {
+    if (desc === "") {
+      toast.error("Cannot upload empty posts");
+      return;
+    }
     setLoading(true);
     try {
       const res = await uploadPost(user._id, desc, file, type);
       toast.success("Post has been Uploaded Successfully!");
-      refreshFn()
+      refreshFn();
 
       var input = document.getElementById("posttypingarea");
       setNativeValue(input, "");
