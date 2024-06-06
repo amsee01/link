@@ -12,6 +12,7 @@ const NewsFeed = ({
   removePost,
   refreshCollapsed,
   onLikePost,
+  noPostsMessage,
 }) => {
   const [orderedPosts, setOrderedPosts] = useState([]);
   const [postComments, setPostComments] = useState({});
@@ -87,6 +88,7 @@ const NewsFeed = ({
             />
           </div>
         ))}
+      {noPostsMessage && <p className="no-posts">{noPostsMessage}</p>}
     </div>
   );
 };
