@@ -24,6 +24,7 @@ const CollapsedPost = ({ post, isSelected, numComments, onSelectPost }) => {
         }`}
       >
         <p>{post.likes.length} likes</p>
+        {/* adds 1 comment count to account for the mod comment */}
         <p>{numComments + (post.pinned ? 0 : 1)} comments</p>
       </div>
     </div>
