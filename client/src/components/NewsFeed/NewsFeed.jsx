@@ -56,7 +56,6 @@ const NewsFeed = ({
   };
 
   const handleDeletePost = async (post) => {
-    console.log("deleting this post");
     if (removePost) await removePost(post);
     const res = await deletePost(user._id, post);
     if (res.message.includes("Success")) {
@@ -70,7 +69,6 @@ const NewsFeed = ({
   const handleRefresh = async () => {
     await getComments(orderedPosts);
     await setCommentRefresh(Math.random());
-    console.log("I did a refresh!");
   };
 
   return (

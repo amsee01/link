@@ -46,6 +46,7 @@ const Post = ({
   const [desc, setDesc] = useState("");
   const [matchUser, setMatchUser] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
   // Create pinned comment object
   let pinnedComment = {
@@ -58,8 +59,6 @@ const Post = ({
     _v: 0,
     _id: "modComment",
   };
-
-  console.log(post);
 
   if (
     (comments.length == 0 || comments[0]._id != "modComment") &&
@@ -118,6 +117,7 @@ const Post = ({
       toast.error("Post Upload failed");
     } finally {
       setLoading(false);
+      setShowComments(true);
     }
   };
 
@@ -202,8 +202,11 @@ const Post = ({
           <span className="text-sm">{like} likes</span>
         </div>
         <div>
-          <span className="cursor-pointer border-b-[1px] border-slate-300 text-sm">
-            {post.comments?.length} comments
+          <span
+            className="cursor-pointer border-b-[1px] border-slate-300 text-sm"
+            onClick={() => setShowComments(!showComments)}
+          >
+            {comments?.length} comments
           </span>
         </div>
       </div>
@@ -223,11 +226,11 @@ const Post = ({
           {loading ? "..." : "Post"}
         </button>
       </div>
-      <div className="collapsed-list">
+      <div className={`collapsed-list ${showComments ? "show" : ""}`}>
         {comments.length === 0 ? (
           <p className="no-posts">No comments yet.</p>
         ) : (
-          comments.map((comment) => {
+          [...comments].reverse().map((comment) => {
             return (
               <div
                 key={comment._id}
@@ -255,7 +258,6 @@ const Post = ({
           })
         )}
       </div>
-
       {showDeleteModal && (
         <div className="modal">
           <div className="modal-content">

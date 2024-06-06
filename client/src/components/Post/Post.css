@@ -42,3 +42,16 @@
   cursor: pointer;
   font-size: 16px;
 }
+
+.collapsed-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+  opacity: 0;
+}
+
+.collapsed-list.show {
+  max-height: 300px;
+  overflow-y: auto;
+  opacity: 1;
+}

@@ -10,10 +10,9 @@ const CollapsedPost = ({ post, isSelected, numComments, onSelectPost }) => {
       } cursor-pointer ${isSelected ? "bg-blue-500 text-white" : ""}`}
       onClick={() => onSelectPost([post])}
     >
-       {post.pinned && ( <BsFillPinAngleFill />)}
-      <div className="flex-grow" style={{paddingLeft:"5pt"}}>
+      {post.pinned && <BsFillPinAngleFill />}
+      <div className="flex-grow" style={{ paddingLeft: "5pt" }}>
         <p className="font-bold text-sm">
-          
           {post.desc.substring(0, MAX_TEXT_LENGTH)}
           {post.desc.length > MAX_TEXT_LENGTH ? "..." : ""}
         </p>
@@ -25,7 +24,7 @@ const CollapsedPost = ({ post, isSelected, numComments, onSelectPost }) => {
         }`}
       >
         <p>{post.likes.length} likes</p>
-        <p>{numComments} comments</p>
+        <p>{numComments + (post.pinned ? 0 : 1)} comments</p>
       </div>
     </div>
   );
