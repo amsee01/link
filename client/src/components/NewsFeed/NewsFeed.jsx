@@ -88,7 +88,9 @@ const NewsFeed = ({
             />
           </div>
         ))}
-      {noPostsMessage && <p className="no-posts">{noPostsMessage}</p>}
+      {noPostsMessage && orderedPosts.length === 0 && (
+        <p className="no-posts">{noPostsMessage}</p>
+      )}
     </div>
   );
 };

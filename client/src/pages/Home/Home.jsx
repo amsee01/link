@@ -110,8 +110,7 @@ const Home = () => {
         <div className="flex-grow p-4">
           <UploadPost refreshFn={handleRefresh} />
           <CollapsedList
-            // posts={filteredPosts}
-            posts={[]}
+            posts={filteredPosts}
             onSelectPost={handleToggleSelectPost}
             selectedPosts={selectedPosts}
             refreshPosts={refresh}
