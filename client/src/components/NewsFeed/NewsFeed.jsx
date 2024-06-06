@@ -12,6 +12,7 @@ const NewsFeed = ({
   removePost,
   refreshCollapsed,
   onLikePost,
+  noPostsMessage,
 }) => {
   const [orderedPosts, setOrderedPosts] = useState([]);
   const [postComments, setPostComments] = useState({});
@@ -56,7 +57,6 @@ const NewsFeed = ({
   };
 
   const handleDeletePost = async (post) => {
-    console.log("deleting this post");
     if (removePost) await removePost(post);
     const res = await deletePost(user._id, post);
     if (res.message.includes("Success")) {
@@ -70,7 +70,6 @@ const NewsFeed = ({
   const handleRefresh = async () => {
     await getComments(orderedPosts);
     await setCommentRefresh(Math.random());
-    console.log("I did a refresh!");
   };
 
   return (
@@ -89,6 +88,7 @@ const NewsFeed = ({
             />
           </div>
         ))}
+      {noPostsMessage && <p className="no-posts">{noPostsMessage}</p>}
     </div>
   );
 };

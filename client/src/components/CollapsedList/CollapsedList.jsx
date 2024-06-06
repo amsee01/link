@@ -14,6 +14,7 @@ const CollapsedList = ({
   onSelectPost,
   selectedPosts,
   refreshPosts,
+  category,
 }) => {
   const [sortCriteria, setSortCriteria] = useState("createdAt");
   const [isReverse, setIsReverse] = useState(false);
@@ -102,7 +103,7 @@ const CollapsedList = ({
         </button>
       </div>
       {sortedPosts.length === 0 ? (
-        <p className="no-posts">No posts available for this category.</p>
+        <p className="no-posts">No posts found in {category}.</p>
       ) : (
         sortedPosts.map((post) => {
           const isSelected =

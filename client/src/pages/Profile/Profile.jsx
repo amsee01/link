@@ -229,6 +229,7 @@ const Profile = () => {
               sorted
               removePost={(post) => handleRefreshPosts()}
               onLikePost={handleRefreshPosts}
+              noPostsMessage={`No posts found in ${filter}.`}
             />
             <Rightbar user={user} />
           </div>
